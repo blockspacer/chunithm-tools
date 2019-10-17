@@ -1,14 +1,17 @@
-// Update with your config settings.
+import * as Config from "./src/config";
+
+Config.loadConfig(process.cwd() + "/config/config.json");
+const config = Config.getConfig();
 
 module.exports = {
     development: {
         client: "mysql",
         connection: {
-            port: 3306,
-            host: "",
-            database: "chunithm_tools",
-            user: "",
-            password: ""
+            port: config.dbPort,
+            host: config.dbHost,
+            database: config.dbName,
+            user: config.dbUser,
+            password: config.dbPassword
         },
         pool: {
             min: 2,
@@ -26,11 +29,11 @@ module.exports = {
     staging: {
         client: "mysql",
         connection: {
-            port: 3306,
-            host: "",
-            database: "chunithm_tools",
-            user: "",
-            password: ""
+            port: config.dbPort,
+            host: config.dbHost,
+            database: config.dbName,
+            user: config.dbUser,
+            password: config.dbPassword
         },
         pool: {
             min: 2,
@@ -48,11 +51,11 @@ module.exports = {
     production: {
         client: "mysql",
         connection: {
-            port: 3306,
-            host: "",
-            database: "chunithm_tools",
-            user: "",
-            password: ""
+            port: config.dbPort,
+            host: config.dbHost,
+            database: config.dbName,
+            user: config.dbUser,
+            password: config.dbPassword
         },
         pool: {
             min: 2,
