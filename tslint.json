@@ -1,0 +1,14 @@
+{
+    "defaultSeverity": "error",
+    "extends": ["tslint:recommended"],
+    "rules": {
+        "no-default-export": true,
+        "interface-name": false,
+        "ordered-imports": true,
+        "object-literal-sort-keys": false,
+        "trailing-comma": false,
+        "interface-over-type-literal": false,
+        "eofline": true
+    },
+    "rulesDirectory": []
+}

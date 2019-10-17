@@ -1,0 +1,22 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "target": "es2017",
+        "sourceMap": true,
+        "typeRoots": [
+            "node_modules/@types"
+        ],
+        "noImplicitAny": true,
+        "noImplicitReturns": true,
+        "noImplicitThis": true,
+        "strictNullChecks": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true
+    },
+    "include": [
+        "./src"
+    ],
+    "exclude": [
+        "./test"
+    ]
+}
