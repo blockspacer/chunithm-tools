@@ -1,4 +1,4 @@
-import {hash} from "bcrypt";
+import {compare, hash} from "bcrypt";
 import {createHash} from "crypto";
 
 export async function bcrypt(content: string) {
@@ -10,6 +10,19 @@ export async function bcrypt(content: string) {
             }
 
             resolve(hashedContent);
+        });
+    });
+}
+
+export async function compareBcrypt(data: string, encrypted: string) {
+    return await new Promise<boolean>((resolve, reject) => {
+        compare(data, encrypted, (err, result) => {
+            if (err) {
+                reject(err);
+                return;
+            }
+
+            resolve(result);
         });
     });
 }
