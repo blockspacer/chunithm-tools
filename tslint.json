@@ -8,7 +8,8 @@
         "object-literal-sort-keys": false,
         "trailing-comma": false,
         "interface-over-type-literal": false,
-        "eofline": true
+        "eofline": true,
+        "no-shadowed-variable": false
     },
     "rulesDirectory": []
 }
