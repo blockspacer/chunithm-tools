@@ -4,7 +4,7 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "test": "jest -i"
+        "test": "knex seed:run && jest -i"
     },
     "author": "Raclett3 <im@s283.net>",
     "license": "MIT",
@@ -41,6 +41,9 @@
         },
         "testMatch": [
             "**/test/**/*.test.ts"
+        ],
+        "setupFilesAfterEnv": [
+            "./test/setup.ts"
         ]
     }
 }
