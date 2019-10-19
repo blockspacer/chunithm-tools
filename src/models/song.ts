@@ -1,12 +1,11 @@
+import {Difficulty} from "./difficulty";
 import {Genre} from "./genre";
 
 export type Song = {
     songId: number,
     songName: string,
-    basicRateValue: number,
-    advancedRateValue: number,
-    expertRateValue: number,
-    masterRateValue: number,
+    difficulty: Difficulty,
+    rateValue: number,
     notes: number,
     scoreVideo: string,
     scoreImage: string,

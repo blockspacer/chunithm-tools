@@ -1,4 +1,5 @@
 import * as Songs from "../../src/controllers/songs";
+import { Difficulty } from "../../src/models/difficulty";
 
 describe("曲データの取り扱い", () => {
     test("曲の作成", () => {
@@ -19,40 +20,120 @@ describe("曲データの取り扱い", () => {
                 ]))
             .resolves
             .toMatchObject([
-                [{
-                    songId: 1,
-                    songName: "Radetzky Marsch",
-                    basicRateValue: 20,
-                    advancedRateValue: 50,
-                    expertRateValue: 80,
-                    masterRateValue: 110,
-                    notes: 1000,
-                    scoreVideo: "RMVideo",
-                    scoreImage: "RMImage",
-                    genreId: 0
-                }], [{
-                    songId: 1,
-                    songName: "Radetzky Marsch",
-                    basicRateValue: 20,
-                    advancedRateValue: 50,
-                    expertRateValue: 80,
-                    masterRateValue: 110,
-                    notes: 1000,
-                    scoreVideo: "RMVideo",
-                    scoreImage: "RMImage",
-                    genreId: 0
-                }, {
-                    songId: 2,
-                    songName: "RAGE OF DUST",
-                    basicRateValue: 30,
-                    advancedRateValue: 60,
-                    expertRateValue: 90,
-                    masterRateValue: 120,
-                    notes: 1500,
-                    scoreVideo: "RDVideo",
-                    scoreImage: "RDImage",
-                    genreId: 1
-                }], []
+                [
+                    {
+                        songId: 1,
+                        songName: "Radetzky Marsch",
+                        difficulty: Difficulty.BASIC,
+                        rateValue: 20,
+                        notes: 0,
+                        scoreVideo: "",
+                        scoreImage: "",
+                        genreId: 0
+                    }, {
+                        songId: 1,
+                        songName: "Radetzky Marsch",
+                        difficulty: Difficulty.ADVANCED,
+                        rateValue: 50,
+                        notes: 0,
+                        scoreVideo: "",
+                        scoreImage: "",
+                        genreId: 0
+                    }, {
+                        songId: 1,
+                        songName: "Radetzky Marsch",
+                        difficulty: Difficulty.EXPERT,
+                        rateValue: 80,
+                        notes: 0,
+                        scoreVideo: "",
+                        scoreImage: "",
+                        genreId: 0
+                    }, {
+                        songId: 1,
+                        songName: "Radetzky Marsch",
+                        difficulty: Difficulty.MASTER,
+                        rateValue: 110,
+                        notes: 1000,
+                        scoreVideo: "RMVideo",
+                        scoreImage: "RMImage",
+                        genreId: 0
+                    }
+                ], [
+                    {
+                        songId: 1,
+                        songName: "Radetzky Marsch",
+                        difficulty: Difficulty.BASIC,
+                        rateValue: 20,
+                        notes: 0,
+                        scoreVideo: "",
+                        scoreImage: "",
+                        genreId: 0
+                    }, {
+                        songId: 1,
+                        songName: "Radetzky Marsch",
+                        difficulty: Difficulty.ADVANCED,
+                        rateValue: 50,
+                        notes: 0,
+                        scoreVideo: "",
+                        scoreImage: "",
+                        genreId: 0
+                    }, {
+                        songId: 1,
+                        songName: "Radetzky Marsch",
+                        difficulty: Difficulty.EXPERT,
+                        rateValue: 80,
+                        notes: 0,
+                        scoreVideo: "",
+                        scoreImage: "",
+                        genreId: 0
+                    }, {
+                        songId: 1,
+                        songName: "Radetzky Marsch",
+                        difficulty: Difficulty.MASTER,
+                        rateValue: 110,
+                        notes: 1000,
+                        scoreVideo: "RMVideo",
+                        scoreImage: "RMImage",
+                        genreId: 0
+                    },
+                    {
+                        songId: 2,
+                        songName: "RAGE OF DUST",
+                        difficulty: Difficulty.BASIC,
+                        rateValue: 30,
+                        notes: 0,
+                        scoreVideo: "",
+                        scoreImage: "",
+                        genreId: 1
+                    }, {
+                        songId: 2,
+                        songName: "RAGE OF DUST",
+                        difficulty: Difficulty.ADVANCED,
+                        rateValue: 60,
+                        notes: 0,
+                        scoreVideo: "",
+                        scoreImage: "",
+                        genreId: 1
+                    }, {
+                        songId: 2,
+                        songName: "RAGE OF DUST",
+                        difficulty: Difficulty.EXPERT,
+                        rateValue: 90,
+                        notes: 0,
+                        scoreVideo: "",
+                        scoreImage: "",
+                        genreId: 1
+                    }, {
+                        songId: 2,
+                        songName: "RAGE OF DUST",
+                        difficulty: Difficulty.MASTER,
+                        rateValue: 120,
+                        notes: 1500,
+                        scoreVideo: "RDVideo",
+                        scoreImage: "RDImage",
+                        genreId: 1
+                    }
+                ], []
             ]);
     });
 

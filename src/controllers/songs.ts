@@ -1,4 +1,5 @@
 import {knex} from "../knex_wrapper";
+import { Difficulty } from "../models/difficulty";
 import {Genre} from "../models/genre";
 import {Song} from "../models/song";
 
@@ -19,10 +20,35 @@ export async function createSong(
             {
                 songid: songId,
                 songname: songName,
-                basic: basicRateValue,
-                advanced: advancedRateValue,
-                expert: expertRateValue,
-                master: masterRateValue,
+                difficulty: Difficulty.BASIC,
+                ratevalue: basicRateValue,
+                notes: 0,
+                scorevideourl: "",
+                scoreimageurl: "",
+                genreid: genreId
+            }, {
+                songid: songId,
+                songname: songName,
+                difficulty: Difficulty.ADVANCED,
+                ratevalue: advancedRateValue,
+                notes: 0,
+                scorevideourl: "",
+                scoreimageurl: "",
+                genreid: genreId
+            }, {
+                songid: songId,
+                songname: songName,
+                difficulty: Difficulty.EXPERT,
+                ratevalue: expertRateValue,
+                notes: 0,
+                scorevideourl: "",
+                scoreimageurl: "",
+                genreid: genreId
+            }, {
+                songid: songId,
+                songname: songName,
+                difficulty: Difficulty.MASTER,
+                ratevalue: masterRateValue,
                 notes: masterNotes,
                 scorevideourl: masterScoreVideo,
                 scoreimageurl: masterScoreImage,
@@ -47,10 +73,8 @@ function constructSong(row: {[key: string]: string | number}): Song {
     return {
         songId: Number(row.songid),
         songName: String(row.songname),
-        basicRateValue: Number(row.basic),
-        advancedRateValue: Number(row.advanced),
-        expertRateValue: Number(row.expert),
-        masterRateValue: Number(row.master),
+        difficulty: Number(row.difficulty),
+        rateValue: Number(row.ratevalue),
         notes: Number(row.notes),
         scoreVideo: String(row.scorevideourl),
         scoreImage: String(row.scoreimageurl),
@@ -69,10 +93,8 @@ export async function searchSongsBySongId(query: string): Promise<Song[] | null>
                         .select(
                             "songid",
                             "songname",
-                            "basic",
-                            "advanced",
-                            "expert",
-                            "master",
+                            "difficulty",
+                            "ratevalue",
                             "notes",
                             "scorevideourl",
                             "scoreimageurl",
@@ -91,10 +113,8 @@ export async function searchSongsByExactSongName(query: string): Promise<Song[] 
                         .select(
                             "songid",
                             "songname",
-                            "basic",
-                            "advanced",
-                            "expert",
-                            "master",
+                            "difficulty",
+                            "ratevalue",
                             "notes",
                             "scorevideourl",
                             "scoreimageurl",
@@ -113,10 +133,8 @@ export async function searchSongsBySongName(query: string): Promise<Song[] | nul
                         .select(
                             "songid",
                             "songname",
-                            "basic",
-                            "advanced",
-                            "expert",
-                            "master",
+                            "difficulty",
+                            "ratevalue",
                             "notes",
                             "scorevideourl",
                             "scoreimageurl",
@@ -144,21 +162,21 @@ export async function searchSongs(query: string): Promise<Song[]> {
 export async function randomSongs(
     minRateValue: number,
     maxRateValue: number,
-    count: number
+    count: number,
+    difficulty: Difficulty = Difficulty.MASTER
 ) {
     const rows = await knex("songs")
                         .select(
                             "songid",
                             "songname",
-                            "basic",
-                            "advanced",
-                            "expert",
-                            "master",
+                            "difficulty",
+                            "ratevalue",
                             "notes",
                             "scorevideourl",
                             "scoreimageurl",
                             "genreid")
-                        .andWhereBetween("master", [minRateValue, maxRateValue])
+                        .whereBetween("ratevalue", [minRateValue, maxRateValue])
+                        .andWhere("difficulty", difficulty)
                         .orderByRaw("RAND()")
                         .limit(count);
 

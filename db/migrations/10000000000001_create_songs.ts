@@ -5,16 +5,15 @@ export async function up(knex: Knex): Promise<any> {
 
     if (!hasTable) {
         return knex.schema.createTable("songs", (t) => {
-            t.integer("songid").primary();
+            t.integer("songid");
             t.string("songname");
-            t.integer("basic");
-            t.integer("advanced");
-            t.integer("expert");
-            t.integer("master");
+            t.integer("difficulty");
+            t.integer("ratevalue");
             t.integer("notes");
             t.string("scorevideourl");
             t.string("scoreimageurl");
             t.integer("genreid");
+            t.primary(["songid", "difficulty"]);
         });
     }
 
