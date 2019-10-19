@@ -82,7 +82,7 @@ function constructSong(row: {[key: string]: string | number}): Song {
     };
 }
 
-export async function searchSongsBySongId(query: string): Promise<Song[] | null> {
+export async function searchSongsBySongId(query: string, difficulty: Difficulty): Promise<Song[] | null> {
     if (query[0] !== "/") {
         return null;
     }
@@ -99,7 +99,9 @@ export async function searchSongsBySongId(query: string): Promise<Song[] | null>
                             "scorevideourl",
                             "scoreimageurl",
                             "genreid")
-                        .where("songid", songId);
+                        .where("songid", songId)
+                        .andWhere("difficulty", difficulty)
+                        .orderBy("songid", "asc");
 
     if (rows.length === 0) {
         return null;
@@ -108,7 +110,7 @@ export async function searchSongsBySongId(query: string): Promise<Song[] | null>
     return rows.map((row) => constructSong(row));
 }
 
-export async function searchSongsByExactSongName(query: string): Promise<Song[] | null> {
+export async function searchSongsByExactSongName(query: string, difficulty: Difficulty): Promise<Song[] | null> {
     const rows = await knex("songs")
                         .select(
                             "songid",
@@ -119,7 +121,9 @@ export async function searchSongsByExactSongName(query: string): Promise<Song[] 
                             "scorevideourl",
                             "scoreimageurl",
                             "genreid")
-                        .where("songname", query);
+                        .where("songname", query)
+                        .andWhere("difficulty", difficulty)
+                        .orderBy("songid", "asc");
 
     if (rows.length === 0) {
         return null;
@@ -128,7 +132,7 @@ export async function searchSongsByExactSongName(query: string): Promise<Song[] 
     return rows.map((row) => constructSong(row));
 }
 
-export async function searchSongsBySongName(query: string): Promise<Song[] | null> {
+export async function searchSongsBySongName(query: string, difficulty: Difficulty): Promise<Song[] | null> {
     const rows = await knex("songs")
                         .select(
                             "songid",
@@ -139,7 +143,9 @@ export async function searchSongsBySongName(query: string): Promise<Song[] | nul
                             "scorevideourl",
                             "scoreimageurl",
                             "genreid")
-                        .where("songname", "like", `%${query}%`);
+                        .where("songname", "like", `%${query}%`)
+                        .andWhere("difficulty", difficulty)
+                        .orderBy("songid", "asc");
 
     if (rows.length === 0) {
         return null;
@@ -148,14 +154,14 @@ export async function searchSongsBySongName(query: string): Promise<Song[] | nul
     return rows.map((row) => constructSong(row));
 }
 
-export async function searchSongs(query: string): Promise<Song[]> {
+export async function searchSongs(query: string, difficulty: Difficulty = Difficulty.MASTER): Promise<Song[]> {
     if (query === "") {
         return [];
     }
 
-    return await searchSongsBySongId(query)
-        || await searchSongsByExactSongName(query)
-        || await searchSongsBySongName(query)
+    return await searchSongsBySongId(query, difficulty)
+        || await searchSongsByExactSongName(query, difficulty)
+        || await searchSongsBySongName(query, difficulty)
         || [];
 }
 

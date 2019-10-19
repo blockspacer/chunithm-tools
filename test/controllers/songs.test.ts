@@ -15,40 +15,13 @@ describe("曲データの取り扱い", () => {
     test("曲の検索", () => {
         return expect(Promise.all([
                     Songs.searchSongs("Radetzky Marsch"),
-                    Songs.searchSongs("Ra"),
+                    Songs.searchSongs("Ra", Difficulty.EXPERT),
                     Songs.searchSongs("xqx")
                 ]))
             .resolves
             .toMatchObject([
                 [
                     {
-                        songId: 1,
-                        songName: "Radetzky Marsch",
-                        difficulty: Difficulty.BASIC,
-                        rateValue: 20,
-                        notes: 0,
-                        scoreVideo: "",
-                        scoreImage: "",
-                        genreId: 0
-                    }, {
-                        songId: 1,
-                        songName: "Radetzky Marsch",
-                        difficulty: Difficulty.ADVANCED,
-                        rateValue: 50,
-                        notes: 0,
-                        scoreVideo: "",
-                        scoreImage: "",
-                        genreId: 0
-                    }, {
-                        songId: 1,
-                        songName: "Radetzky Marsch",
-                        difficulty: Difficulty.EXPERT,
-                        rateValue: 80,
-                        notes: 0,
-                        scoreVideo: "",
-                        scoreImage: "",
-                        genreId: 0
-                    }, {
                         songId: 1,
                         songName: "Radetzky Marsch",
                         difficulty: Difficulty.MASTER,
@@ -62,58 +35,12 @@ describe("曲データの取り扱い", () => {
                     {
                         songId: 1,
                         songName: "Radetzky Marsch",
-                        difficulty: Difficulty.BASIC,
-                        rateValue: 20,
-                        notes: 0,
-                        scoreVideo: "",
-                        scoreImage: "",
-                        genreId: 0
-                    }, {
-                        songId: 1,
-                        songName: "Radetzky Marsch",
-                        difficulty: Difficulty.ADVANCED,
-                        rateValue: 50,
-                        notes: 0,
-                        scoreVideo: "",
-                        scoreImage: "",
-                        genreId: 0
-                    }, {
-                        songId: 1,
-                        songName: "Radetzky Marsch",
                         difficulty: Difficulty.EXPERT,
                         rateValue: 80,
                         notes: 0,
                         scoreVideo: "",
                         scoreImage: "",
                         genreId: 0
-                    }, {
-                        songId: 1,
-                        songName: "Radetzky Marsch",
-                        difficulty: Difficulty.MASTER,
-                        rateValue: 110,
-                        notes: 1000,
-                        scoreVideo: "RMVideo",
-                        scoreImage: "RMImage",
-                        genreId: 0
-                    },
-                    {
-                        songId: 2,
-                        songName: "RAGE OF DUST",
-                        difficulty: Difficulty.BASIC,
-                        rateValue: 30,
-                        notes: 0,
-                        scoreVideo: "",
-                        scoreImage: "",
-                        genreId: 1
-                    }, {
-                        songId: 2,
-                        songName: "RAGE OF DUST",
-                        difficulty: Difficulty.ADVANCED,
-                        rateValue: 60,
-                        notes: 0,
-                        scoreVideo: "",
-                        scoreImage: "",
-                        genreId: 1
                     }, {
                         songId: 2,
                         songName: "RAGE OF DUST",
@@ -122,15 +49,6 @@ describe("曲データの取り扱い", () => {
                         notes: 0,
                         scoreVideo: "",
                         scoreImage: "",
-                        genreId: 1
-                    }, {
-                        songId: 2,
-                        songName: "RAGE OF DUST",
-                        difficulty: Difficulty.MASTER,
-                        rateValue: 120,
-                        notes: 1500,
-                        scoreVideo: "RDVideo",
-                        scoreImage: "RDImage",
                         genreId: 1
                     }
                 ], []
