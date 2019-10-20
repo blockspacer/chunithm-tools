@@ -1,4 +1,6 @@
+import {calcRate} from "../helper/calculator";
 import {knex, onDuplicateKey} from "../knex_wrapper";
+import {Best} from "../models/best";
 import {Difference} from "../models/difference";
 import {Difficulty} from "../models/difficulty";
 import {Genre} from "../models/genre";
@@ -287,6 +289,69 @@ export async function getHistories(playerId: string, count: number): Promise<His
         time: String(row.time),
         score: Number(row.score)
     }));
+}
+
+export async function getBestSongs(playerId: string): Promise<Best[]> {
+    const rows = await knex("scores")
+                        .innerJoin("songs", function() {
+                            this.on("songs.songid", "scores.songid");
+                            this.andOn("songs.difficulty", "scores.difficulty");
+                        })
+                        .select(
+                            "songs.songid",
+                            "songs.songname",
+                            "songs.difficulty",
+                            "songs.ratevalue",
+                            "songs.notes",
+                            "songs.scorevideourl",
+                            "songs.scoreimageurl",
+                            "songs.genreid",
+                            "scores.score",
+                            "scores.mark")
+                        .where("playerid", playerId);
+
+    const best: Best[] = rows.map((row) => ({
+        song: {
+            songId: Number(row.songid),
+            songName: String(row.songname),
+            difficulty: Number(row.difficulty),
+            rateValue: Number(row.ratevalue),
+            notes: Number(row.notes),
+            scoreVideo: String(row.scorevideourl),
+            scoreImage: String(row.scoreimageurl),
+            genreId: Number(row.genreid)
+        },
+        rate: calcRate(Number(row.ratevalue), Number(row.score)),
+        score: Number(row.score)
+    }));
+
+    return best.sort((a, b) => {
+        if (a.rate > b.rate) {
+            return -1;
+        }
+
+        if (a.rate < b.rate) {
+            return 1;
+        }
+
+        if (a.score > b.score) {
+            return -1;
+        }
+
+        if (a.score < b.score) {
+            return 1;
+        }
+
+        if (a.song.rateValue > b.song.rateValue) {
+            return -1;
+        }
+
+        if (a.song.rateValue < b.song.rateValue) {
+            return 1;
+        }
+
+        return 0;
+    });
 }
 
 export async function statistics(songId: number, borders: Array<[string, number]>) {

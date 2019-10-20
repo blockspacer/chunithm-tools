@@ -22,16 +22,16 @@ describe("スコアデータの扱い", () => {
     test("スコアの追加", () => {
         return expect(Scores.setScores("eliza", {
                 11: [
-                    [1009911, 2],
-                    [1008811, 1],
-                    [1007711, 1],
-                    [1006611, 1]
+                    [1009000, 2],
+                    [1008000, 1],
+                    [1007500, 1],
+                    [1005000, 1]
                 ],
                 12: [
-                    [1008812, 1],
-                    [1007712, 1],
-                    [1006612, 1],
-                    [1005512, 0]
+                    [1008500, 1],
+                    [1007500, 1],
+                    [1005000, 1],
+                    [1000000, 0]
                 ]}))
             .resolves
             .toBeUndefined();
@@ -40,7 +40,7 @@ describe("スコアデータの扱い", () => {
     test("スコアの確認", () => {
         return expect(Promise.all([
                 Scores.getScores("eliza", {songId: 11, difficulty: Difficulty.MASTER}),
-                Scores.getScores("eliza", {maxScore: 1005512}),
+                Scores.getScores("eliza", {maxScore: 1000000}),
                 Scores.getScores("eliza", {maxRateValue: 20})
             ]))
             .resolves
@@ -56,7 +56,7 @@ describe("スコアデータの扱い", () => {
                         scoreImage: "",
                         genreId: 0
                     },
-                    score: 1006611,
+                    score: 1005000,
                     mark: 1
                 }], [{
                     song: {
@@ -69,7 +69,7 @@ describe("スコアデータの扱い", () => {
                         scoreImage: "",
                         genreId: 0
                     },
-                    score: 1005512,
+                    score: 1000000,
                     mark: 0
                 }], [{
                     song: {
@@ -82,7 +82,7 @@ describe("スコアデータの扱い", () => {
                         scoreImage: "",
                         genreId: 0
                     },
-                    score: 1009911,
+                    score: 1009000,
                     mark: 2
                 }]
             ]);
@@ -91,16 +91,16 @@ describe("スコアデータの扱い", () => {
     test("差分の登録", () => {
         return expect(Scores.setDifference("eliza", {
                 12: [
-                    [1008812, 1],
-                    [1007712, 1],
-                    [1006712, 1],
-                    [1005512, 0]
+                    [1008500, 1],
+                    [1007500, 1],
+                    [1007500, 1],
+                    [1000000, 0]
                 ],
                 13: [
                     [0, 0],
                     [0, 0],
                     [0, 0],
-                    [1004413, 0]
+                    [1005000, 0]
                 ]}))
             .resolves
             .toBeUndefined();
@@ -120,8 +120,8 @@ describe("スコアデータの扱い", () => {
                     scoreImage: "",
                     genreId: 0
                 },
-                oldScore: 1006612,
-                newScore: 1006712
+                oldScore: 1005000,
+                newScore: 1007500
             }, {
                 song: {
                     songId: 13,
@@ -134,7 +134,7 @@ describe("スコアデータの扱い", () => {
                     genreId: 0
                 },
                 oldScore: 0,
-                newScore: 1004413
+                newScore: 1005000
             }]);
     });
 
@@ -202,5 +202,117 @@ describe("スコアデータの扱い", () => {
                 time: "1990-01-01 00:00",
                 score: 1007500
             }]);
+    });
+
+    test("ベスト枠の取得", () => {
+        return expect(Scores.getBestSongs("eliza"))
+            .resolves
+            .toMatchObject([
+                {
+                    song: {
+                        songId: 12,
+                        songName: "Don't stop my love",
+                        difficulty: Difficulty.MASTER,
+                        rateValue: 120,
+                        notes: 0,
+                        scoreVideo: "",
+                        scoreImage: "",
+                        genreId: 0
+                    },
+                    rate: 1300,
+                    score: 1000000
+                }, {
+                    song: {
+                        songId: 11,
+                        songName: "BE MY BABY",
+                        difficulty: Difficulty.MASTER,
+                        rateValue: 110,
+                        notes: 0,
+                        scoreVideo: "",
+                        scoreImage: "",
+                        genreId: 0
+                    },
+                    rate: 1250,
+                    score: 1005000
+                }, {
+                    song: {
+                        songId: 12,
+                        songName: "Don't stop my love",
+                        difficulty: Difficulty.EXPERT,
+                        rateValue: 90,
+                        notes: 0,
+                        scoreVideo: "",
+                        scoreImage: "",
+                        genreId: 0
+                    },
+                    rate: 1050,
+                    score: 1005000
+                }, {
+                    song: {
+                        songId: 11,
+                        songName: "BE MY BABY",
+                        difficulty: Difficulty.EXPERT,
+                        rateValue: 80,
+                        notes: 0,
+                        scoreVideo: "",
+                        scoreImage: "",
+                        genreId: 0
+                    },
+                    rate: 1000,
+                    score: 1007500
+                }, {
+                    song: {
+                        songId: 12,
+                        songName: "Don't stop my love",
+                        difficulty: Difficulty.ADVANCED,
+                        rateValue: 60,
+                        notes: 0,
+                        scoreVideo: "",
+                        scoreImage: "",
+                        genreId: 0
+                    },
+                    rate: 800,
+                    score: 1007500
+                }, {
+                    song: {
+                        songId: 11,
+                        songName: "BE MY BABY",
+                        difficulty: Difficulty.ADVANCED,
+                        rateValue: 50,
+                        notes: 0,
+                        scoreVideo: "",
+                        scoreImage: "",
+                        genreId: 0
+                    },
+                    rate: 700,
+                    score: 1008000
+                }, {
+                    song: {
+                        songId: 12,
+                        songName: "Don't stop my love",
+                        difficulty: Difficulty.BASIC,
+                        rateValue: 30,
+                        notes: 0,
+                        scoreVideo: "",
+                        scoreImage: "",
+                        genreId: 0
+                    },
+                    rate: 500,
+                    score: 1008500
+                }, {
+                    song: {
+                        songId: 11,
+                        songName: "BE MY BABY",
+                        difficulty: Difficulty.BASIC,
+                        rateValue: 20,
+                        notes: 0,
+                        scoreVideo: "",
+                        scoreImage: "",
+                        genreId: 0
+                    },
+                    rate: 400,
+                    score: 1009000
+                },
+            ]);
     });
 });
