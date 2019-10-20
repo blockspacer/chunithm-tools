@@ -1,6 +1,11 @@
 import * as Users from "../../src/controllers/users";
+import {knex} from "../../src/knex_wrapper";
 
 describe("ユーザーデータの取り扱い", () => {
+    afterAll(() => {
+        return knex("users").del();
+    });
+
     test("ユーザーデータの追加", () => {
         return expect(Promise.all([
                 Users.create("alice", "password1", "player1"),

@@ -1,6 +1,11 @@
 import * as Players from "../../src/controllers/players";
+import {knex} from "../../src/knex_wrapper";
 
 describe("プレイヤーデータの取り扱い", () => {
+    afterAll(() => {
+        return knex("players").del();
+    });
+
     test("プレイヤーデータの追加", () => {
         return expect(Promise.all([
                 Players.setPlayer("alice", "ALICE", 1398, 1400, "NEW COMER",   0,  0, "2019-01-01"),

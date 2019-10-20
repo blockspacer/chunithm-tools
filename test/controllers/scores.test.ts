@@ -13,7 +13,10 @@ describe("スコアデータの扱い", () => {
     });
 
     afterAll(() => {
-        return knex("songs").del();
+        return Promise.all([
+            knex("songs").del(),
+            knex("scores").del()
+        ]);
     });
 
     test("スコアの追加", () => {
