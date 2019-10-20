@@ -1,7 +1,12 @@
 import * as Songs from "../../src/controllers/songs";
-import { Difficulty } from "../../src/models/difficulty";
+import {knex} from "../../src/knex_wrapper";
+import {Difficulty} from "../../src/models/difficulty";
 
 describe("曲データの取り扱い", () => {
+    afterAll(() => {
+        return knex("songs").del();
+    });
+
     test("曲の作成", () => {
         return expect(Promise.all([
                     Songs.createSong(1, "Radetzky Marsch", 20, 50, 80, 110, 1000, "RMVideo", "RMImage", 0),
