@@ -35,7 +35,7 @@ export async function setPlayer(
     title: string,
     emblemTop: number,
     emblemBase: number,
-    recordDate: string
+    recordDate?: string
 ) {
     await onDuplicateKey(
         "players",
@@ -50,6 +50,10 @@ export async function setPlayer(
             emblembase: emblemBase
         }
     );
+
+    if (!recordDate) {
+        return;
+    }
 
     await onDuplicateKey(
         "ratelog",
