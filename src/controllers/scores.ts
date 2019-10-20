@@ -1,4 +1,4 @@
-import {knex} from "../knex_wrapper";
+import {knex, onDuplicateKey} from "../knex_wrapper";
 import {Difference} from "../models/difference";
 import {Difficulty} from "../models/difficulty";
 import {Genre} from "../models/genre";
@@ -88,18 +88,17 @@ export async function setScores(playerId: string, scores: ScoreList) {
     for (const songId in scores) {
         if (scores.hasOwnProperty(songId)) {
             for (const difficulty of difficulties) {
-                await trx.raw(
-                    knex("scores")
-                        .insert({
-                            playerid: playerId,
-                            songid: Number(songId),
-                            difficulty,
-                            score: scores[Number(songId)][difficulty][0],
-                            mark: scores[Number(songId)][difficulty][1]
-                        })
-                        .toQuery()
-                    + " on duplicate key "
-                    + knex.raw("update score = ?, mark = ?", scores[Number(songId)][difficulty]).toQuery()
+                await onDuplicateKey(
+                    "scores",
+                    {
+                        playerid: playerId,
+                        songid: Number(songId),
+                        difficulty
+                    }, {
+                        score: scores[Number(songId)][difficulty][0],
+                        mark: scores[Number(songId)][difficulty][1]
+                    },
+                    trx
                 );
             }
         }
@@ -177,18 +176,17 @@ export async function setDifference(playerId: string, scores: ScoreList) {
     for (const songId in scores) {
         if (scores.hasOwnProperty(songId)) {
             for (const difficulty of difficulties) {
-                await trx.raw(
-                    knex("differences")
-                        .insert({
-                            playerid: playerId,
-                            songid: Number(songId),
-                            difficulty,
-                            oldscore: 0,
-                            newscore: scores[Number(songId)][difficulty][0]
-                        })
-                        .toQuery()
-                    + " on duplicate key "
-                    + knex.raw("update newscore = ?", scores[Number(songId)][difficulty][0]).toQuery()
+                await onDuplicateKey(
+                    "differences",
+                    {
+                        playerid: playerId,
+                        songid: Number(songId),
+                        difficulty,
+                        oldscore: 0
+                    }, {
+                        newscore: scores[Number(songId)][difficulty][0]
+                    },
+                    trx
                 );
             }
         }
