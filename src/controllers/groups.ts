@@ -85,6 +85,43 @@ export async function songRanking(groupId: string, songId: number, difficulty: D
     }));
 }
 
+export async function worldsEndTotalRanking(groupId: string): Promise<RankingScore[]> {
+    const rows = await knex("worldsendscores")
+                        .innerJoin("players", "worldsendscores.playerid", "players.playerid")
+                        .innerJoin("groupmembers", "groupmembers.playerid", "players.playerid")
+                        .select("players.playername")
+                        .sum("worldsendscores.score as score")
+                        .where({
+                            "groupmembers.groupid": groupId
+                        })
+                        .groupBy("players.playerid")
+                        .orderByRaw("sum(worldsendscores.score) desc");
+
+    return rows.map((row) => ({
+        playerName: String(row.playername),
+        score: Number(row.score)
+    }));
+}
+
+export async function worldsEndSongRanking(groupId: string, songId: number): Promise<RankingScore[]> {
+    const rows = await knex("worldsendscores")
+                        .innerJoin("players", "worldsendscores.playerid", "players.playerid")
+                        .innerJoin("groupmembers", "groupmembers.playerid", "players.playerid")
+                        .select(
+                            "players.playername",
+                            "worldsendscores.score")
+                        .where({
+                            "groupmembers.groupid": groupId,
+                            "worldsendscores.songid": songId
+                        })
+                        .orderBy("worldsendscores.score", "desc");
+
+    return rows.map((row) => ({
+        playerName: String(row.playername),
+        score: Number(row.score)
+    }));
+}
+
 export async function currentRateRanking(groupId: string): Promise<RankingScore[]> {
     const rows = await knex("players")
                         .innerJoin("groupmembers", "groupmembers.playerid", "players.playerid")
