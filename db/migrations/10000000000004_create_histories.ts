@@ -8,11 +8,9 @@ export async function up(knex: Knex): Promise<any> {
             t.string("playerid", 64);
             t.string("songname");
             t.integer("difficulty");
-            t.integer("number").unsigned().notNullable();
+            t.increments("number");
             t.string("time");
             t.integer("score");
-            t.primary(["playerid", "number"]);
-            t.increments("number");
         });
     }
 
