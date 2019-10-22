@@ -4,7 +4,9 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "test": "knex seed:run && jest -i"
+        "test": "knex seed:run && jest -i",
+        "build": "gulp",
+        "start": "node build/index.js"
     },
     "author": "Raclett3 <im@s283.net>",
     "license": "MIT",
@@ -16,10 +18,13 @@
     },
     "devDependencies": {
         "@types/bcrypt": "^3.0.0",
+        "@types/gulp": "^4.0.6",
         "@types/jest": "^24.0.18",
         "@types/jsonwebtoken": "^8.3.5",
         "@types/knex": "^0.16.1",
         "@types/node": "^12.7.8",
+        "gulp": "^4.0.2",
+        "gulp-typescript": "^5.0.1",
         "jest": "^24.9.0",
         "ts-jest": "^24.1.0",
         "ts-node": "^8.4.1",
