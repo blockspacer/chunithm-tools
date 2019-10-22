@@ -8,29 +8,7 @@ export const development = {
     connection: {
         port: config.dbPort,
         host: config.dbHost,
-        database: config.dbName,
-        user: config.dbUser,
-        password: config.dbPassword
-    },
-    pool: {
-        min: 2,
-        max: 10
-    },
-    migrations: {
-        directory: "./db/migrations",
-        tableName: "knex_migrations"
-    },
-    seeds: {
-        directory: "./db/seeds",
-    }
-};
-
-export const staging = {
-    client: "mysql",
-    connection: {
-        port: config.dbPort,
-        host: config.dbHost,
-        database: config.dbName,
+        database: config.dbName + "_dev",
         user: config.dbUser,
         password: config.dbPassword
     },
