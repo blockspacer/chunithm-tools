@@ -9,7 +9,8 @@
         "trailing-comma": false,
         "interface-over-type-literal": false,
         "eofline": true,
-        "no-shadowed-variable": false
+        "no-shadowed-variable": false,
+        "no-console": false
     },
     "rulesDirectory": []
 }
