@@ -5,6 +5,7 @@ import {getConfig} from "../config";
 export const app = Express();
 
 app.use(BodyParser.urlencoded({parameterLimit: 10485760, limit: 10485760, extended: true}));
+app.use(BodyParser.json({limit: 10485760}));
 
 app.options("*", (_, res) => {
     res.setHeader("Access-Control-Allow-Origin", "https://chunithm-net.com");
