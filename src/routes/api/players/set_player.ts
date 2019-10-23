@@ -1,5 +1,6 @@
 import * as Express from "express";
 import {setPlayer} from "../../../controllers/players";
+import {getDate} from "../../../helper/datetime";
 import {decodeJWT} from "../../../helper/jwt";
 import {Player, validatePlayer} from "../../../models/player";
 
@@ -24,7 +25,8 @@ export default async function(req: Express.Request, res: Express.Response, next:
             player.maxRate,
             player.title,
             player.emblemTop,
-            player.emblemBase
+            player.emblemBase,
+            getDate()
         );
         res.status(200).json({status: "SUCCESS"});
     } catch (err) {
