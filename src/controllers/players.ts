@@ -1,3 +1,4 @@
+import {ControllerError} from "../exceptions";
 import {knex, onDuplicateKey} from "../knex_wrapper";
 import {Player} from "../models/player";
 import {RateLog} from "../models/ratelog";
@@ -14,7 +15,7 @@ export async function getPlayer(playerId: string): Promise<Player> {
                         .where("playerid", playerId);
 
     if (rows.length === 0) {
-        throw new Error("プレイヤーデータが存在しません。");
+        throw new ControllerError("プレイヤーデータが存在しません。");
     }
 
     return {

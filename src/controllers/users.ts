@@ -1,3 +1,4 @@
+import {ControllerError} from "../exceptions";
 import {bcrypt, compareBcrypt, sha256} from "../helper/hash";
 import {encodeJWT} from "../helper/jwt";
 import {knex} from "../knex_wrapper";
@@ -6,7 +7,7 @@ export async function create(userId: string, plainPassword: string, playerId: st
     const hashedPassword = await bcrypt(plainPassword);
 
     if (await exist(userId)) {
-        throw new Error("The user with the UserID is already exists");
+        throw new ControllerError("The user with the UserID is already exists");
     }
 
     await knex("users").insert({
@@ -38,14 +39,14 @@ export async function signIn(userId: string, plainPassword: string) {
                         });
 
     if (rows.length === 0) {
-        throw new Error("Signing in failed");
+        throw new ControllerError("Signing in failed");
     }
 
     if (
         rows[0].password !== oldHashedPassword
         && !await compareBcrypt(plainPassword, rows[0].password)
     ) {
-        throw new Error("Signing in failed");
+        throw new ControllerError("Signing in failed");
     }
 
     return encodeJWT(rows[0].playerid);
@@ -59,7 +60,7 @@ export async function getPlayerId(userId: string) {
                         });
 
     if (rows.length === 0) {
-        throw new Error("Signing in failed");
+        throw new ControllerError("Signing in failed");
     }
 
     return rows[0].playerid as string;
