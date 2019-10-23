@@ -1,7 +1,8 @@
 import * as Express from "express";
 import {getPlayerId} from "../../../controllers/users";
+import {ControllerError} from "../../../exceptions";
 
-export default async function(req: Express.Request, res: Express.Response): Promise<void> {
+export default async function(req: Express.Request, res: Express.Response, next: Express.NextFunction): Promise<void> {
     const token: string = req.body.token;
 
     if (
@@ -14,7 +15,11 @@ export default async function(req: Express.Request, res: Express.Response): Prom
     try {
         await getPlayerId(token);
         res.status(200).json({status: "SUCCESS"});
-    } catch {
-        res.status(200).json({status: "FAILED"});
+    } catch (err) {
+        if (err instanceof ControllerError) {
+            res.status(200).json({status: "FAILED"});
+        } else {
+            next(err);
+        }
     }
 }
