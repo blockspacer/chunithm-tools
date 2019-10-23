@@ -1,9 +1,12 @@
 import * as Express from "express";
 import {rateLimit} from "./rate_limit";
+import users from "./users";
 
 const router = Express.Router();
 
 router.use(rateLimit);
+
+router.use("/users", users);
 
 router.use((_, res) => {
     res.status(404);
