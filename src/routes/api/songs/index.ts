@@ -5,6 +5,6 @@ import search from "./search";
 const router = Express.Router();
 
 router.post("/random", random);
-router.search("/search", search);
+router.post("/search", search);
 
 export default router;
