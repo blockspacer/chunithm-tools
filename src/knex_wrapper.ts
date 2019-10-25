@@ -1,5 +1,5 @@
 import * as Knex from "knex";
-import * as settings from "../knexfile";
+import * as settings from "./knex_config";
 
 export const knex = Knex(
     process.env.NODE_ENV === "production" ? settings.production : settings.development);
