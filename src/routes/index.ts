@@ -1,6 +1,7 @@
 import * as BodyParser from "body-parser";
 import * as Express from "express";
 import {getConfig} from "../config";
+import api from "./api";
 
 export const app = Express();
 
@@ -13,6 +14,9 @@ app.options("*", (_, res) => {
     res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
     res.sendStatus(200);
 });
+
+app.use("/api", api);
+app.use("/", Express.static(process.cwd() + "/build/client"));
 
 app.use((_, res) => {
     res.status(404);

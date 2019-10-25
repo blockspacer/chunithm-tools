@@ -27,3 +27,5 @@ router.use((err: Express.ErrorRequestHandler,
             console.log(err);
             res.json({});
          });
+
+export default router;
