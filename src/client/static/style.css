@@ -1,0 +1,14 @@
+body {
+    background-color: #eee;
+    font-family: sans-serif;
+}
+
+.item {
+    position: relative;
+    width: 90%;
+    max-width: 768px;
+    margin: 10px auto;
+    padding: 5px;
+    background-color: #fff;
+    border-radius: 3px;
+}
