@@ -15,11 +15,11 @@ export default async function(req: Express.Request, res: Express.Response, next:
 
     try {
         const playerId = await decodeJWT(token);
-        const player = getPlayer(playerId);
-        res.status(200).json({status: "SUCCESS", player});
+        const player = await getPlayer(playerId);
+        res.status(200).json(player);
     } catch (err) {
         if (err instanceof ControllerError) {
-            res.status(200).json({status: "FAILED"});
+            res.status(200).json({});
         } else {
             next(err);
         }

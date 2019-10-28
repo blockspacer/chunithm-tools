@@ -15,7 +15,7 @@ export default async function(req: Express.Request, res: Express.Response, next:
     try {
         const playerId = await decodeJWT(token);
         const rateLog = getRateLog(playerId);
-        res.status(200).json({status: "SUCCESS", rateLog});
+        res.status(200).json(rateLog);
     } catch (err) {
         next(err);
     }

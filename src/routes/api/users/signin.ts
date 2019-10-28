@@ -16,10 +16,10 @@ export default async function(req: Express.Request, res: Express.Response, next:
 
     try {
         const token = await signIn(userId, password);
-        res.status(200).json({status: "SUCCESS", token});
+        res.status(200).send(token);
     } catch (err) {
         if (err instanceof ControllerError) {
-            res.status(200).json({status: "FAILED"});
+            res.status(200).send("");
         } else {
             next(err);
         }

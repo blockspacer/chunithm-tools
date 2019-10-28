@@ -28,7 +28,7 @@ export default async function(req: Express.Request, res: Express.Response, next:
             player.emblemBase,
             getDate()
         );
-        res.status(200).json({status: "SUCCESS"});
+        res.status(200).send("");
     } catch (err) {
         next(err);
     }
