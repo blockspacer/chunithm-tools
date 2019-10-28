@@ -18,7 +18,7 @@ export default async function(req: Express.Request, res: Express.Response, next:
     const playerId = sha256(userId);
 
     try {
-        await create(playerId, userId, password);
+        await create(userId, password, playerId);
         res.status(200).json({status: "SUCCESS"});
     } catch (err) {
         if (err instanceof ControllerError) {
