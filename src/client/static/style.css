@@ -11,4 +11,64 @@ body {
     padding: 5px;
     background-color: #fff;
     border-radius: 3px;
+    color: #000;
+}
+
+.overlay {
+    background-color: rgba(0, 0, 0, 0.5);
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+}
+
+.center {
+    text-align: center;
+}
+
+.dialog {
+    position: relative;
+    width: 90%;
+    max-width: 768px;
+    margin: auto;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 5px;
+    background-color: #fff;
+    border-radius: 3px;
+}
+
+.input-name {
+    font-size: 80%;
+    opacity: 0.8;
+}
+
+input[type="text"], input[type="password"] {
+    border: 0;
+    border-bottom: 2px solid #000;
+    background-color: #fff;
+    padding: 5px;
+    font-size: 100%;
+    -webkit-border-radius: 0;
+    -webkit-appearance: none;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    color: #000;
+    width: 95%;
+}
+
+input[type="submit"], input[type="button"] {
+    border-radius: 3px;
+    background-color: #0bf;
+    color: #fff;
+    font-weight: bold;
+    -webkit-box-sizing: content-box;
+    -webkit-appearance: button;
+    appearance: button;
+    border: none;
+    box-sizing: border-box;
+    cursor: pointer;
+    width: calc(100% - 10px);
+    padding: 10px 0;
+    margin: 5px;
 }
