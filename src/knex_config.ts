@@ -21,7 +21,7 @@ export const development = {
         tableName: "knex_migrations"
     },
     seeds: {
-        directory: "./db/seeds",
+        directory: "./db/seeds/dev",
     }
 };
 
@@ -43,6 +43,6 @@ export const production = {
         tableName: "knex_migrations"
     },
     seeds: {
-        directory: "./db/seeds",
+        directory: "./db/seeds/prod",
     }
 };
