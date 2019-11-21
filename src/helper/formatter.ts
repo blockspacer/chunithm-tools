@@ -12,6 +12,10 @@ export function scoreToInteger(score: string) {
     return integerScore;
 }
 
+export function integerToRate(rate: number) {
+    return String(Math.floor(rate / 100)) + "." + ("0" + String(rate % 100)).slice(-2);
+}
+
 export function rateValueToInteger(rateValue: string) {
     const parts = rateValue.split(".", 2);
     if (parts.length === 1) {

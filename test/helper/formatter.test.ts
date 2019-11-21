@@ -1,4 +1,4 @@
-import {difficultyToInteger, levelToInteger, rateValueToInteger, scoreToInteger} from "../../src/helper/formatter";
+import {difficultyToInteger, integerToRate, levelToInteger, rateValueToInteger, scoreToInteger} from "../../src/helper/formatter";
 
 describe("フォーマット関数", () => {
     test("スコア文字列から整数への変換", () => {
@@ -13,6 +13,17 @@ describe("フォーマット関数", () => {
                 1006000,
                 1009960,
                 1002000
+            ]);
+    });
+
+    test("整数からレートへの変換", () => {
+        expect([
+                integerToRate(1234),
+                integerToRate(100)
+            ])
+            .toMatchObject([
+                "12.34",
+                "1.00"
             ]);
     });
 
