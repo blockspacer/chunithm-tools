@@ -1,5 +1,6 @@
 import Vue from "vue";
 import Router from "vue-router";
+import Border from "./views/features/Border.vue";
 import Home from "./views/Home.vue";
 import NotFound from "./views/NotFound.vue";
 import Signin from "./views/Signin.vue";
@@ -12,6 +13,7 @@ const router = new Router({
         {path: "/", component: Home},
         {path: "/signin", component: Signin},
         {path: "/signup", component: Signup},
+        {path: "/border", component: Border},
         {path: "*", component: NotFound}
     ]
 });

@@ -7,7 +7,12 @@
             </router-link>
         </div>
         <div id="main"><router-view></router-view></div>
-        <div id="menu" @click="menu = !menu" :class="{visible: menu}"></div>
+        <div id="menu" @click="menu = !menu" :class="{visible: menu}">
+            <h2>機能一覧</h2>
+            <ul>
+                <li><router-link to="/border">ボーダー算出</router-link></li>
+            </ul>
+        </div>
     </div>
 </template>
 
