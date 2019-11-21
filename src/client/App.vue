@@ -11,6 +11,7 @@
             <h2>機能一覧</h2>
             <ul>
                 <li><router-link to="/border">ボーダー算出</router-link></li>
+                <li><router-link to="/random">ランダム選曲</router-link></li>
             </ul>
         </div>
     </div>
