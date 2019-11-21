@@ -23,50 +23,49 @@
 </template>
 
 <script lang="ts">
-    import Vue from "vue"
+    import {Component, Vue} from 'vue-property-decorator';
     import request from "../lib/request";
     import {Player, validatePlayer} from "../../models/player";
 
-    export default Vue.extend({
-        data() {
-            return {
-                userid: "",
-                password: "",
-                playerName: "",
-                signedin: false,
-                ready: false
+    @Component
+    export default class extends Vue {
+        userid = "";
+        password = "";
+        playerName = "";
+        signedin = false;
+        ready = false;
+
+        async getPlayer() {
+            const token = window.localStorage.getItem("token");
+            this.playerName = "";
+            const player: Player = await request("/api/players/get_player", {token});
+            this.ready = true;
+            if (!validatePlayer(player)) {
+                return;
             }
-        },
-        methods: {
-            getPlayer: async function() {
-                const token = window.localStorage.getItem("token");
-                this.playerName = "";
-                const player: Player = await request("/api/players/get_player", {token});
-                this.ready = true;
-                if (!validatePlayer(player)) {
-                    return;
-                }
-                this.playerName = player.playerName;
-            },
-            signin: async function() {
-                const token = await request("/api/users/signin", {
-                                        userId: this.userid,
-                                        password: this.password
-                                    });
-                if (token === "") {
-                    alert("サインインに失敗しました。");
-                    return;
-                }
-                window.localStorage.setItem("token", token);
-                this.signedin = true;
-                this.getPlayer();
-            },
-            signout: function() {
-                this.signedin = false;
-                window.localStorage.setItem("token", "");
+            this.playerName = player.playerName;
+        }
+
+        async signin() {
+            const token = await request("/api/users/signin", {
+                                    userId: this.userid,
+                                    password: this.password
+                                });
+            if (token === "") {
+                alert("サインインに失敗しました。");
+                return;
             }
-        },
-        mounted: async function() {
+            window.localStorage.setItem("token", token);
+            this.signedin = true;
+            this.getPlayer();
+        }
+
+        signout() {
+            this.signedin = false;
+            window.localStorage.setItem("token", "");
+        }
+
+        async init() {
             const token = window.localStorage.getItem("token");
             if (token === null) {
                 this.ready = true;
@@ -80,7 +79,12 @@
             this.signedin = true;
             this.getPlayer();
         }
-    });
+
+        constructor() {
+            super();
+            this.init();
+        }
+    }
 </script>
 
 <style scoped>
