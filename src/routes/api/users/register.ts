@@ -15,6 +15,14 @@ export default async function(req: Express.Request, res: Express.Response, next:
         return;
     }
 
+    if (
+        !/^[a-zA-Z0-9]+$/u.test(userId)
+        || !/^[\x20-\x7e]+$/u.test(password)
+    ) {
+        res.status(200).json({status: "FAILED"});
+        return;
+    }
+
     const playerId = sha256(userId);
 
     try {
