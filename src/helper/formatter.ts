@@ -1,4 +1,19 @@
 export function scoreToInteger(score: string) {
+    const rates: {[key: string]: number} = {
+        "SSS": 1007500,
+        "SS+": 1005000,
+        "SS" : 1000000,
+        "S+" : 990000,
+        "S"  : 975000,
+        "AAA": 950000,
+        "AA" : 925000,
+        "A"  : 900000
+    };
+
+    if (score in rates) {
+        return rates[score];
+    }
+
     const integerScore = parseInt(score, 10);
 
     if (integerScore <= 1010) {
