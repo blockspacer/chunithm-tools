@@ -13,7 +13,7 @@ export default async function(req: Express.Request, res: Express.Response, next:
 
     try {
         const songs = await searchSongs(query);
-        res.status(200).json({status: "SUCCESS", songs});
+        res.status(200).json(songs);
     } catch (err) {
         next(err);
     }
