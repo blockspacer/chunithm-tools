@@ -12,6 +12,7 @@
             <ul>
                 <li><router-link to="/border">ボーダー算出</router-link></li>
                 <li><router-link to="/random">ランダム選曲</router-link></li>
+                <li><router-link to="/difficulty">適正難易度</router-link></li>
             </ul>
         </div>
     </div>

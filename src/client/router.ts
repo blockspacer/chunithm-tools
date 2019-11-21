@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Router from "vue-router";
 import Border from "./views/features/Border.vue";
+import Difficulty from "./views/features/Difficulty.vue";
 import Random from "./views/features/Random.vue";
 import Home from "./views/Home.vue";
 import NotFound from "./views/NotFound.vue";
@@ -16,6 +17,7 @@ const router = new Router({
         {path: "/signup", component: Signup},
         {path: "/border", component: Border},
         {path: "/random", component: Random},
+        {path: "/difficulty", component: Difficulty},
         {path: "*", component: NotFound}
     ]
 });
