@@ -1,3 +1,5 @@
+import {Border} from "../models/border";
+
 export function calcRate(rateValue: number, score: number): number {
     if (score >= 1007500) {
         return (rateValue * 10) + 200;
@@ -28,4 +30,19 @@ export function calcRate(rateValue: number, score: number): number {
     }
 
     return 0;
+}
+
+export function calcBorder(notes: number, score: number): Border[] {
+    const justice = Math.floor((1010000 - score) / (10000 / notes));
+    const maxAttack = Math.floor(justice / 52);
+    const borders: Border[] = [];
+
+    for (let attack = maxAttack; attack >= maxAttack - 9 && attack >= 0; attack--) {
+        borders.push({
+            justice: justice - attack * 51,
+            attack
+        });
+    }
+
+    return borders;
 }
