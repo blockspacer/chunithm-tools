@@ -1,4 +1,4 @@
-import {calcBorder, calcRate} from "../../src/helper/calculator";
+import {calcBorder, calcRate, calcScore} from "../../src/helper/calculator";
 
 describe("計算関数", () => {
     test("曲別レート", () => {
@@ -42,6 +42,21 @@ describe("計算関数", () => {
                     {justice: 439, attack: 11},
                     {justice: 490, attack: 10}
                 ]
+            ]);
+    });
+
+    test("スコア算出", () => {
+        expect([
+                calcScore(2000,  0, 0, 0),
+                calcScore(1990, 10, 0, 0),
+                calcScore(1900, 99, 1, 0),
+                calcScore(1900, 95, 4, 1),
+            ])
+            .toMatchObject([
+                1010000,
+                1009950,
+                1009250,
+                1008000
             ]);
     });
 });

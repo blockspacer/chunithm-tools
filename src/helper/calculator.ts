@@ -46,3 +46,8 @@ export function calcBorder(notes: number, score: number): Border[] {
 
     return borders;
 }
+
+export function calcScore(critical: number, justice: number, attack: number, miss: number) {
+    const notes = critical + justice + attack + miss;
+    return (critical * 101 + justice * 100 + attack * 50) * 10000 / notes;
+}
