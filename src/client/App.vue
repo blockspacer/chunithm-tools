@@ -15,6 +15,10 @@
                 <li><router-link to="/difficulty">適正難易度</router-link></li>
                 <li><router-link to="/calcscore">スコア計算</router-link></li>
             </ul>
+            <p><b>ログイン必須</b></p>
+            <ul>
+                <li><router-link to="/playerdata">プレイヤーデータ</router-link></li>
+            </ul>
         </div>
     </div>
 </template>

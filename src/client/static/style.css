@@ -76,3 +76,40 @@ input[type="submit"], input[type="button"] {
     padding: 10px 0;
     margin: 5px;
 }
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 90%;
+}
+
+td {
+    border-bottom: solid 1px #000;
+    height: 1.5em;
+}
+
+.master {
+    background-color: #A0E;
+    color: #FFF;
+}
+
+.expert {
+    background-color: #E00;
+    color: #FFF;
+}
+
+.advanced {
+    background-color: #FA0;
+    color: #FFF;
+}
+
+.basic {
+    background-color: #0C0;
+    color: #FFF;
+}
+
+@media screen and (min-width: 768px) {
+    table {
+        font-size: 100%;
+    }
+}
