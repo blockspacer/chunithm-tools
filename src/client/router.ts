@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Router from "vue-router";
 import Border from "./views/features/Border.vue";
+import Calcscore from "./views/features/Calcscore.vue";
 import Difficulty from "./views/features/Difficulty.vue";
 import Random from "./views/features/Random.vue";
 import Home from "./views/Home.vue";
@@ -18,6 +19,7 @@ const router = new Router({
         {path: "/border", component: Border},
         {path: "/random", component: Random},
         {path: "/difficulty", component: Difficulty},
+        {path: "/calcscore", component: Calcscore},
         {path: "*", component: NotFound}
     ]
 });
