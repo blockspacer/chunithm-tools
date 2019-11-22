@@ -9,7 +9,7 @@
             <p><input type="text" v-model="max"></p>
             <p class="input-name">曲数</p>
             <p><input type="text" v-model="count"></p>
-            <p><input type="button" @click="random()" value="算出"></p>
+            <p><input type="button" @click="random()" value="選曲"></p>
             <div>
                 <p class="center" v-for="song in songs" :key="song.songId">
                     {{song.songName}}
