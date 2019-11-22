@@ -7,6 +7,7 @@ import Random from "./views/features/Random.vue";
 import Home from "./views/Home.vue";
 import NotFound from "./views/NotFound.vue";
 import Playerdata from "./views/profiles/Playerdata.vue";
+import Scorelist from "./views/profiles/Scorelist.vue";
 import Signin from "./views/Signin.vue";
 import Signup from "./views/Signup.vue";
 
@@ -22,6 +23,7 @@ const router = new Router({
         {path: "/difficulty", component: Difficulty},
         {path: "/calcscore", component: Calcscore},
         {path: "/playerdata", component: Playerdata},
+        {path: "/scorelist", component: Scorelist},
         {path: "*", component: NotFound}
     ]
 });

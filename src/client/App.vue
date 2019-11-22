@@ -18,6 +18,7 @@
             <p><b>ログイン必須</b></p>
             <ul>
                 <li><router-link to="/playerdata">プレイヤーデータ</router-link></li>
+                <li><router-link to="/scorelist">スコア一覧</router-link></li>
             </ul>
         </div>
     </div>
