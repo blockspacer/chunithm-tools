@@ -66,3 +66,8 @@ export function difficultyToInteger(difficulty: string) {
 
     return {min, max};
 }
+
+export function integerToScoreMark(scoreMark: number) {
+    const marks = ["", "FC", "AJ", "FC", "FCFC", "AJFC"];
+    return marks[scoreMark] || "";
+}

@@ -1,4 +1,4 @@
-import {difficultyToInteger, integerToRate, integerToRateValue, levelToInteger, rateValueToInteger, scoreToInteger} from "../../src/helper/formatter";
+import {difficultyToInteger, integerToRate, integerToRateValue, integerToScoreMark, levelToInteger, rateValueToInteger, scoreToInteger} from "../../src/helper/formatter";
 
 describe("フォーマット関数", () => {
     test("スコア文字列から整数への変換", () => {
@@ -76,6 +76,21 @@ describe("フォーマット関数", () => {
                 {min: 120, max: 126},
                 {min: 137, max: 139},
                 {min: 135, max: 135}
+            ]);
+    });
+
+    test("整数からスコアランプへの変換", () => {
+        expect([
+                integerToScoreMark(0),
+                integerToScoreMark(2),
+                integerToScoreMark(4),
+                integerToScoreMark(6)
+            ])
+            .toMatchObject([
+                "",
+                "AJ",
+                "FCFC",
+                ""
             ]);
     });
 });
