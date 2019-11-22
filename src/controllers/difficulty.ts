@@ -95,6 +95,7 @@ export async function getRecommend(playerId: string, options: Options = {}): Pro
                             "songs.genreid")
                         .max("difficulty.rate as rate")
                         .where("scores.playerid", playerId)
+                        .andWhere("songs.difficulty", Difficulty.MASTER)
                         .andWhereRaw("scores.score >= difficulty.score")
                         .andWhereBetween("songs.ratevalue", [options.minRateValue || 10, options.maxRateValue || 160])
                         .groupBy(
