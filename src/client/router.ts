@@ -8,6 +8,7 @@ import Home from "./views/Home.vue";
 import NotFound from "./views/NotFound.vue";
 import Playerdata from "./views/profiles/Playerdata.vue";
 import Recommend from "./views/profiles/Recommend.vue";
+import Registerscore from "./views/profiles/Registerscore.vue";
 import Scorehistory from "./views/profiles/Scorehistory.vue";
 import Scorelist from "./views/profiles/Scorelist.vue";
 import Signin from "./views/Signin.vue";
@@ -28,6 +29,7 @@ const router = new Router({
         {path: "/scorelist", component: Scorelist},
         {path: "/scorehistory", component: Scorehistory},
         {path: "/recommend", component: Recommend},
+        {path: "/registerscore", component: Registerscore},
         {path: "*", component: NotFound}
     ]
 });
