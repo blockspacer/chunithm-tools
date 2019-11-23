@@ -109,6 +109,25 @@ export async function setScores(playerId: string, scores: ScoreList) {
     await trx.commit();
 }
 
+export async function setSingleScore(playerId: string, songId: number, difficulty: Difficulty, score: number) {
+    const trx = await knex.transaction();
+
+    await onDuplicateKey(
+        "scores",
+        {
+            playerid: playerId,
+            songid: songId,
+            difficulty
+        }, {
+            score,
+            mark: 0
+        },
+        trx
+    );
+
+    await trx.commit();
+}
+
 export async function getDifference(playerId: string): Promise<Difference[]> {
     const rows = await knex("differences")
                         .innerJoin("songs", function() {

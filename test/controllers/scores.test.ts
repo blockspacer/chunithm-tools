@@ -25,7 +25,7 @@ describe("スコアデータの扱い", () => {
                     [1009000, 2],
                     [1008000, 1],
                     [1007500, 1],
-                    [1005000, 1]
+                    [1004000, 1]
                 ],
                 12: [
                     [1008500, 1],
@@ -33,6 +33,12 @@ describe("スコアデータの扱い", () => {
                     [1005000, 1],
                     [1000000, 0]
                 ]}))
+            .resolves
+            .toBeUndefined();
+    });
+
+    test("単一のスコアの登録", () => {
+        return expect(Scores.setSingleScore("eliza", 11, Difficulty.MASTER, 1005000))
             .resolves
             .toBeUndefined();
     });
@@ -57,7 +63,7 @@ describe("スコアデータの扱い", () => {
                         genreId: 0
                     },
                     score: 1005000,
-                    mark: 1
+                    mark: 0
                 }], [{
                     song: {
                         songId: 12,
