@@ -9,7 +9,7 @@ export default async function(req: Express.Request, res: Express.Response, next:
 
     if (
         typeof token !== "string"
-        && validateHistoryList(history)
+        || validateHistoryList(history)
     ) {
         res.status(400).json({});
         return;
