@@ -11,6 +11,7 @@
             <p><input type="text" v-model="minScore"></p>
             <p class="input-name">最高スコア</p>
             <p><input type="text" v-model="maxScore"></p>
+            <p class="input-name">難易度</p>
             <p><select v-model="difficulty">
                 <option :value="null">指定なし</option>
                 <option :value="Difficulty.BASIC">BASIC</option>
@@ -18,6 +19,7 @@
                 <option :value="Difficulty.EXPERT">EXPERT</option>
                 <option :value="Difficulty.MASTER">MASTER</option>
             </select></p>
+            <p class="input-name">ジャンル</p>
             <p><select v-model="genre">
                 <option :value="null">指定なし</option>
                 <option :value="Genre.POPS">POPS &amp; ANIME</option>
