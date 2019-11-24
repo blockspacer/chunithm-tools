@@ -19,7 +19,7 @@
             <ul>
                 <li><router-link to="/playerdata">プレイヤーデータ</router-link></li>
                 <li><router-link to="/scorelist">スコア一覧</router-link></li>
-                <li><router-link to="/scorehistory">スコア一覧</router-link></li>
+                <li><router-link to="/scorehistory">スコア履歴</router-link></li>
                 <li><router-link to="/recommend">リコメンド</router-link></li>
                 <li><router-link to="/registerscore">スコア登録</router-link></li>
             </ul>
