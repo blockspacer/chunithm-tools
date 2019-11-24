@@ -27,6 +27,14 @@ body {
     text-align: center;
 }
 
+.right {
+    text-align: right;
+}
+
+.small {
+    font-size: 80%;
+}
+
 .dialog {
     position: relative;
     width: 90%;

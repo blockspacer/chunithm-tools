@@ -6,6 +6,7 @@ import Difficulty from "./views/features/Difficulty.vue";
 import Random from "./views/features/Random.vue";
 import Home from "./views/Home.vue";
 import NotFound from "./views/NotFound.vue";
+import Difference from "./views/profiles/Difference.vue";
 import Playerdata from "./views/profiles/Playerdata.vue";
 import Recommend from "./views/profiles/Recommend.vue";
 import Registerscore from "./views/profiles/Registerscore.vue";
@@ -30,6 +31,7 @@ const router = new Router({
         {path: "/scorehistory", component: Scorehistory},
         {path: "/recommend", component: Recommend},
         {path: "/registerscore", component: Registerscore},
+        {path: "/difference", component: Difference},
         {path: "*", component: NotFound}
     ]
 });
