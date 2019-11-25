@@ -76,3 +76,21 @@ export async function setWorldsEndScores(playerId: string, scores: WorldsEndScor
 
     await trx.commit();
 }
+
+export async function setSingleWorldsEndScore(playerId: string, songId: number, score: number) {
+    const trx = await knex.transaction();
+
+    await onDuplicateKey(
+        "worldsendscores",
+        {
+            playerid: playerId,
+            songid: songId
+        }, {
+            score,
+            mark: 0
+        },
+        trx
+    );
+
+    await trx.commit();
+}
