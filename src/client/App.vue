@@ -23,6 +23,7 @@
                 <li><router-link to="/recommend">リコメンド</router-link></li>
                 <li><router-link to="/registerscore">スコア登録</router-link></li>
                 <li><router-link to="/difference">更新差分</router-link></li>
+                <li><router-link to="/worldsendscorelist">WORLD'S ENDスコア一覧</router-link></li>
             </ul>
         </div>
     </div>

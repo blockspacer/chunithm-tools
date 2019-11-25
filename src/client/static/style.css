@@ -116,6 +116,15 @@ td {
     color: #FFF;
 }
 
+.worldsend {
+    background: #000000;
+    background: -moz-linear-gradient(left, #21841a 0%, #93741d 33%, #911d1d 66%, #6b006b 100%);
+    background: -webkit-linear-gradient(left, #21841a 0%,#93741d 33%,#911d1d 66%,#6b006b 100%);
+    background: linear-gradient(to right, #21841a 0%,#93741d 33%,#911d1d 66%,#6b006b 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#21841a', endColorstr='#6b006b',GradientType=1);
+    color: #FFF;
+}
+
 @media screen and (min-width: 768px) {
     table {
         font-size: 100%;
