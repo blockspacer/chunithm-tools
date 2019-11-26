@@ -2,7 +2,9 @@ import * as Knex from "knex";
 import * as settings from "./knex_config";
 
 export const knex = Knex(
-    process.env.NODE_ENV === "production" ? settings.production : settings.development);
+    process.env.NODE_ENV === "production" ? settings.production :
+                             "test" ?       settings.test :
+                                            settings.development);
 
 export function onDuplicateKey(
     tableName: string,
