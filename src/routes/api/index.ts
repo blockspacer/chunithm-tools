@@ -1,6 +1,7 @@
 import * as Express from "express";
 import players from "./players";
 import {rateLimit} from "./rate_limit";
+import rivals from "./rivals";
 import scores from "./scores";
 import songs from "./songs";
 import users from "./users";
@@ -13,6 +14,7 @@ router.use("/users", users);
 router.use("/players", players);
 router.use("/songs", songs);
 router.use("/scores", scores);
+router.use("/rivals", rivals);
 
 router.use((_, res) => {
     res.status(404);
