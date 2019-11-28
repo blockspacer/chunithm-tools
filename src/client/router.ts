@@ -10,6 +10,7 @@ import Difference from "./views/profiles/Difference.vue";
 import Playerdata from "./views/profiles/Playerdata.vue";
 import Recommend from "./views/profiles/Recommend.vue";
 import Registerscore from "./views/profiles/Registerscore.vue";
+import Rival from "./views/profiles/Rival.vue";
 import Scorehistory from "./views/profiles/Scorehistory.vue";
 import Scorelist from "./views/profiles/Scorelist.vue";
 import Worldsendregisterscore from "./views/profiles/Worldsendregisterscore.vue";
@@ -34,6 +35,7 @@ const router = new Router({
         {path: "/recommend", component: Recommend},
         {path: "/registerscore", component: Registerscore},
         {path: "/difference", component: Difference},
+        {path: "/rival", component: Rival},
         {path: "/worldsendscorelist", component: Worldsendscorelist},
         {path: "/worldsendregisterscore", component: Worldsendregisterscore},
         {path: "*", component: NotFound}
