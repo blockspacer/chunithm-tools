@@ -97,8 +97,8 @@ export async function getRivals(playerId: string): Promise<Rival[]> {
                             "emblemtop",
                             "emblembase",
                             "rivalcode")
-                        .innerJoin("player", "player.playerid", "rivals.rival")
-                        .innerJoin("rivalcode", "player.playerid", "rivalcode.playerid")
+                        .innerJoin("players", "players.playerid", "rivals.rival")
+                        .innerJoin("rivalcode", "players.playerid", "rivalcode.playerid")
                         .where("rivals.playerid", playerId);
 
     return rows.map((row) => ({
