@@ -49,7 +49,7 @@ export const test = {
     connection: {
         port: config.dbPort,
         host: config.dbHost,
-        database: config.dbName + "_dev",
+        database: config.dbName + "_test",
         user: config.dbUser,
         password: config.dbPassword
     },
