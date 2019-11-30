@@ -1,5 +1,5 @@
 import {commands} from "./commands";
-import {Context} from "./models";
+import {CommandErrorKinds, Context} from "./models";
 
 const errorMessages = [
     "コマンドが見つかりませんでした。",
@@ -19,7 +19,7 @@ export async function executeCommand(command: string, context: Context): Promise
                        : [];
 
     if (!(commandName in commands)) {
-        return [];
+        return ["Error: ", errorMessages[CommandErrorKinds.COMMAND_NOT_FOUND]];
     }
 
     const result = await commands[commandName].body(parameters, context);
