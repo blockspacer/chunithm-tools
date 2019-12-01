@@ -66,4 +66,30 @@ describe("シェル", () => {
                     ]
                 ]);
     });
+
+    test("help", () => {
+        return expect(Promise.all([
+                    executeCommand("help", {}),
+                    executeCommand("help border", {}),
+                    executeCommand("help command_that_doesnt_exist", {})
+                ]))
+                .resolves
+                .toMatchObject([
+                    [
+                        "help コマンド名",
+                        "指定されたコマンドのヘルプを表示します。",
+                        "コマンド名にlistを指定した場合、コマンドリストを表示します。",
+                        "各コマンドのヘルプの1行目はコマンドの使用法です。",
+                        "[]で囲まれた部分は省略することが出来ます。"
+                    ],
+                    [
+                        "border 曲名,スコア",
+                        "指定された曲で指定された以上のスコアのために出せる最大のJUSTICE-ATTACK数を表示します。"
+                    ],
+                    [
+                        "Error: ",
+                        "コマンドが見つかりませんでした。"
+                    ]
+                ]);
+    });
 });
