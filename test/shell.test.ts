@@ -1,19 +1,48 @@
+import {cacheDifficulty} from "../src/controllers/difficulty";
+import {setPlayer} from "../src/controllers/players";
+import {setScores} from "../src/controllers/scores";
 import {createSong} from "../src/controllers/songs";
 import {knex} from "../src/knex_wrapper";
+import {ScoreList} from "../src/models/score_list";
 import {executeCommand} from "../src/shell";
 
 describe("シェル", () => {
-    beforeAll(() => {
-        return Promise.all([
+    beforeAll(async () => {
+        const playerRates = [1500, 1525, 1550];
+        const scores: ScoreList[] = [
+            {
+                1: [[0, 0], [0, 0], [0, 0], [1005000, 0]],
+                2: [[0, 0], [0, 0], [0, 0], [1007000, 0]],
+                3: [[0, 0], [0, 0], [0, 0], [1009000, 0]]
+            }, {
+                1: [[0, 0], [0, 0], [0, 0], [1007000, 0]],
+                2: [[0, 0], [0, 0], [0, 0], [1009000, 0]],
+                3: [[0, 0], [0, 0], [0, 0], [1005000, 0]]
+            }, {
+                1: [[0, 0], [0, 0], [0, 0], [1009000, 0]],
+                2: [[0, 0], [0, 0], [0, 0], [1005000, 0]],
+                3: [[0, 0], [0, 0], [0, 0], [1007000, 0]]
+            }
+        ];
+
+        await Promise.all([
+                    ...playerRates.map((rate, index) =>
+                                            setPlayer(String(index), `player${index}`, rate, rate, "", 0, 0)),
+                    ...scores.map((score, index) => setScores(String(index), score)),
                     createSong(1, "Radetzky Marsch", 20, 50, 80, 110, 1000, "RMVideo", "RMImage", 0),
                     createSong(2, "RAGE OF DUST", 30, 60, 90, 120, 1500, "RDVideo", "RDImage", 1),
                     createSong(3, "BE MY BABY", 40, 70, 100, 130, 2000, "BMBVideo", "BMBImage", 2)
                 ]);
+
+        await cacheDifficulty();
     });
 
     afterAll(() => {
         return Promise.all([
-                    knex("songs").del()
+                    knex("songs").del(),
+                    knex("scores").del(),
+                    knex("players").del(),
+                    knex("difficulty").del()
                 ]);
     });
 
@@ -89,6 +118,29 @@ describe("シェル", () => {
                     [
                         "Error: ",
                         "コマンドが見つかりませんでした。"
+                    ]
+                ]);
+    });
+
+    test("difficulty", () => {
+        return expect(Promise.all([
+                    executeCommand("difficulty R, 1007500", {}),
+                    executeCommand("difficulty Q, 1007500", {}),
+                    executeCommand("difficulty Rage, 1007500", {})
+                ]))
+                .resolves
+                .toMatchObject([
+                    [
+                        "曲が絞り切れませんでした。以下より該当の曲を選び、その真下のコマンドを入力してください。\n",
+                        "Radetzky Marsch\ndifficulty /1, 1007500\n",
+                        "RAGE OF DUST\ndifficulty /2, 1007500\n"
+                    ],
+                    [
+                        "曲が見つかりませんでした。"
+                    ],
+                    [
+                        "RAGE OF DUST",
+                        "15.25"
                     ]
                 ]);
     });
