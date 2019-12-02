@@ -38,7 +38,7 @@ export const border: Command = {
         }
 
         if (songs.length > 5) {
-            return ["曲が見つかりませんでした。より具体的な名前をお試しください。"];
+            return ["曲が絞り切れませんでした。より具体的な名前をお試しください。"];
         }
 
         if (songs.length > 1) {
