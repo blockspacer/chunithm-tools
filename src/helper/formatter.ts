@@ -1,3 +1,5 @@
+import {Difficulty} from "../models/difficulty";
+
 export function scoreToInteger(score: string) {
     const rates: {[key: string]: number} = {
         "SSS": 1007500,
@@ -70,4 +72,9 @@ export function difficultyToInteger(difficulty: string) {
 export function integerToScoreMark(scoreMark: number) {
     const marks = ["", "FC", "AJ", "FC", "FCFC", "AJFC"];
     return marks[scoreMark] || "";
+}
+
+export function integerToDifficulty(difficulty: Difficulty) {
+    const difficultyNames = ["basic", "advanced", "expert", "master"];
+    return difficultyNames[difficulty] || "";
 }
