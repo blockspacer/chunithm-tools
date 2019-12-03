@@ -11,9 +11,9 @@ describe("シェル", () => {
         const playerRates = [1500, 1525, 1550];
         const scores: ScoreList[] = [
             {
-                1: [[0, 0], [0, 0], [0, 0], [1005000, 0]],
-                2: [[0, 0], [0, 0], [0, 0], [1007000, 0]],
-                3: [[0, 0], [0, 0], [0, 0], [1009000, 0]]
+                1: [[      0, 0], [      0, 0], [      0, 0], [1005000, 0]],
+                2: [[      0, 0], [      0, 0], [      0, 0], [1007000, 0]],
+                3: [[1010000, 0], [1009900, 0], [1009500, 0], [1009000, 0]]
             }, {
                 1: [[0, 0], [0, 0], [0, 0], [1007000, 0]],
                 2: [[0, 0], [0, 0], [0, 0], [1009000, 0]],
@@ -171,6 +171,37 @@ describe("シェル", () => {
                         "0 notes",
                         "BASIC: 3.0",
                         "0 notes",
+                    ]
+                ]);
+    });
+
+    test("mybest", () => {
+        return expect(Promise.all([
+                    executeCommand("mybest R",  {}),
+                    executeCommand("mybest R",  {playerId: "0"}),
+                    executeCommand("mybest Q",  {playerId: "0"}),
+                    executeCommand("mybest /3", {playerId: "0"})
+                ]))
+                .resolves
+                .toMatchObject([
+                    [
+                        "Error: ",
+                        "プレイヤーデータを登録してからご利用ください。"
+                    ],
+                    [
+                        "曲が絞り切れませんでした。以下より該当の曲を選び、その真下のコマンドを入力してください。\n",
+                        "Radetzky Marsch\nmybest /1\n",
+                        "RAGE OF DUST\nmybest /2\n"
+                    ],
+                    [
+                        "曲が見つかりませんでした。"
+                    ],
+                    [
+                        "BE MY BABY",
+                        "MASTER: 1009000",
+                        "EXPERT: 1009500",
+                        "ADVANCED: 1009900",
+                        "BASIC: 1010000",
                     ]
                 ]);
     });

@@ -3,6 +3,7 @@ import {border} from "./border";
 import {difficulty} from "./difficulty";
 import {help} from "./help";
 import {info} from "./info";
+import {mybest} from "./mybest";
 import {ping} from "./ping";
 
 export const commands: {[key: string]: Command} = {
@@ -18,5 +19,7 @@ export const commands: {[key: string]: Command} = {
     "difficulty": difficulty,
     "dif": difficulty,
 
-    "info": info
+    "info": info,
+
+    "mybest": mybest,
 };
