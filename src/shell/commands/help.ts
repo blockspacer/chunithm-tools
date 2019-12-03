@@ -18,7 +18,10 @@ export const help: Command = {
         if (params[0] === "list") {
             return [
                 "border - ボーダーを算出します。",
+                "difficulty - 曲の難易度を取得します。",
                 "help - コマンドのヘルプを表示します。",
+                "info - 曲の情報を取得します。",
+                "mybest - 曲の情報を取得します。",
                 "ping - CHUNITHM Toolsの動作確認を行います。"
             ];
         }
