@@ -27,7 +27,7 @@ describe("シェル", () => {
 
         await Promise.all([
                     ...playerRates.map((rate, index) =>
-                                            setPlayer(String(index), `player${index}`, rate, rate, "", 0, 0)),
+                                            setPlayer(String(index), `player${index}`, rate, rate, "", 14, 13)),
                     ...scores.map((score, index) => setScores(String(index), score)),
                     createSong(1, "Radetzky Marsch", 20, 50, 80, 110, 1000, "RMVideo", "RMImage", 0),
                     createSong(2, "RAGE OF DUST", 30, 60, 90, 120, 1500, "RDVideo", "RDImage", 1),
@@ -202,6 +202,27 @@ describe("シェル", () => {
                         "EXPERT: 1009500",
                         "ADVANCED: 1009900",
                         "BASIC: 1010000",
+                    ]
+                ]);
+    });
+
+    test("profile", () => {
+        return expect(Promise.all([
+                    executeCommand("profile",  {}),
+                    executeCommand("profile",  {playerId: "0"})
+                ]))
+                .resolves
+                .toMatchObject([
+                    [
+                        "Error: ",
+                        "プレイヤーデータを登録してからご利用ください。"
+                    ],
+                    [
+                        "player0",
+                        "RATE: 15.00 / 15.00",
+                        "BEST: 2.2800",
+                        "RECENT: 53.1600",
+                        "EMBLEM: V (IV-belt)"
                     ]
                 ]);
     });

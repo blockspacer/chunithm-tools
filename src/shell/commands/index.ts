@@ -5,6 +5,7 @@ import {help} from "./help";
 import {info} from "./info";
 import {mybest} from "./mybest";
 import {ping} from "./ping";
+import {profile} from "./profile";
 
 export const commands: {[key: string]: Command} = {
     "ping": ping,
@@ -22,4 +23,6 @@ export const commands: {[key: string]: Command} = {
     "info": info,
 
     "mybest": mybest,
+
+    "profile": profile,
 };
