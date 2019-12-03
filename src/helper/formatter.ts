@@ -78,3 +78,15 @@ export function integerToDifficulty(difficulty: Difficulty) {
     const difficultyNames = ["basic", "advanced", "expert", "master"];
     return difficultyNames[difficulty] || "";
 }
+
+export function integerToEmblem(emblem: number) {
+    const emblems: {[key: number]: string} = {
+        10: "I",
+        11: "II",
+        12: "III",
+        13: "IV",
+        14: "V",
+        20: "∞"
+    };
+    return emblems[emblem] || "";
+}
