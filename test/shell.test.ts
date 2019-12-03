@@ -144,4 +144,34 @@ describe("シェル", () => {
                     ]
                 ]);
     });
+
+    test("info", () => {
+        return expect(Promise.all([
+                    executeCommand("info R", {}),
+                    executeCommand("info Q", {}),
+                    executeCommand("info Rage", {})
+                ]))
+                .resolves
+                .toMatchObject([
+                    [
+                        "曲が絞り切れませんでした。以下より該当の曲を選び、その真下のコマンドを入力してください。\n",
+                        "Radetzky Marsch\ninfo /1\n",
+                        "RAGE OF DUST\ninfo /2\n"
+                    ],
+                    [
+                        "曲が見つかりませんでした。"
+                    ],
+                    [
+                        "RAGE OF DUST",
+                        "MASTER: 12.0",
+                        "1500 notes",
+                        "EXPERT: 9.0",
+                        "0 notes",
+                        "ADVANCED: 6.0",
+                        "0 notes",
+                        "BASIC: 3.0",
+                        "0 notes",
+                    ]
+                ]);
+    });
 });
