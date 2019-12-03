@@ -60,6 +60,50 @@ describe("曲データの取り扱い", () => {
             ]);
     });
 
+    test("単一曲の取得", () => {
+        return expect(Songs.getSingleSong(1))
+            .resolves
+            .toMatchObject([
+                {
+                    songId: 1,
+                    songName: "Radetzky Marsch",
+                    difficulty: Difficulty.BASIC,
+                    rateValue: 20,
+                    notes: 0,
+                    scoreVideo: "",
+                    scoreImage: "",
+                    genreId: 0
+                }, {
+                    songId: 1,
+                    songName: "Radetzky Marsch",
+                    difficulty: Difficulty.ADVANCED,
+                    rateValue: 50,
+                    notes: 0,
+                    scoreVideo: "",
+                    scoreImage: "",
+                    genreId: 0
+                }, {
+                    songId: 1,
+                    songName: "Radetzky Marsch",
+                    difficulty: Difficulty.EXPERT,
+                    rateValue: 80,
+                    notes: 0,
+                    scoreVideo: "",
+                    scoreImage: "",
+                    genreId: 0
+                }, {
+                    songId: 1,
+                    songName: "Radetzky Marsch",
+                    difficulty: Difficulty.MASTER,
+                    rateValue: 110,
+                    notes: 1000,
+                    scoreVideo: "RMVideo",
+                    scoreImage: "RMImage",
+                    genreId: 0
+                },
+            ]);
+    });
+
     test("曲の存在の確認", () => {
         return expect(Promise.all([
                     Songs.songExists(1),

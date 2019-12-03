@@ -165,6 +165,23 @@ export async function searchSongs(query: string, difficulty: Difficulty = Diffic
         || [];
 }
 
+export async function getSingleSong(songId: number) {
+    const rows = await knex("songs")
+                        .select(
+                            "songid",
+                            "songname",
+                            "difficulty",
+                            "ratevalue",
+                            "notes",
+                            "scorevideourl",
+                            "scoreimageurl",
+                            "genreid")
+                        .where("songid", String(songId))
+                        .orderBy("difficulty", "asc");
+
+    return rows.map((row) => constructSong(row));
+}
+
 export async function getAllSongs(difficulty: Difficulty = Difficulty.MASTER): Promise<Song[]> {
     const rows = await knex("songs")
                         .select(
