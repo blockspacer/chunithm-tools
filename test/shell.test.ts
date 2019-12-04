@@ -42,7 +42,8 @@ describe("シェル", () => {
                     knex("songs").del(),
                     knex("scores").del(),
                     knex("players").del(),
-                    knex("difficulty").del()
+                    knex("difficulty").del(),
+                    knex("groupmembers").del()
                 ]);
     });
 
@@ -225,5 +226,57 @@ describe("シェル", () => {
                         "EMBLEM: V (IV-belt)"
                     ]
                 ]);
+    });
+
+    test("rank", async () => {
+        expect.assertions(4);
+
+        await expect(executeCommand("rank join",  {playerId: "0", groupId: "g"}))
+                .resolves
+                .toMatchObject(["グループに参加しました。"]);
+
+        await expect(Promise.all([
+                    executeCommand("rank join",  {}),
+                    executeCommand("rank join",  {playerId: "0"}),
+                    executeCommand("rank join",  {playerId: "0", groupId: "g"}),
+                    executeCommand("rank R",  {playerId: "0", groupId: "g"}),
+                    executeCommand("rank Q",  {playerId: "0", groupId: "g"}),
+                    executeCommand("rank /3", {playerId: "0", groupId: "g"}),
+                    executeCommand("rank BE, exp", {playerId: "0", groupId: "g"})
+                ]))
+                .resolves
+                .toMatchObject([
+                    [
+                        "Error: ",
+                        "プレイヤーデータを登録してからご利用ください。"
+                    ],
+                    [
+                        "Error: ",
+                        "グループ内でご利用ください。"
+                    ],
+                    ["グループに既に参加しています。"],
+                    [
+                        "曲が絞り切れませんでした。以下より該当の曲を選び、その真下のコマンドを入力してください。\n",
+                        "Radetzky Marsch\nmybest /1\n",
+                        "RAGE OF DUST\nmybest /2\n"
+                    ],
+                    ["曲が見つかりませんでした。"],
+                    [
+                        "BE MY BABY",
+                        "play: 1009000"
+                    ],
+                    [
+                        "BE MY BABY",
+                        "play: 1009500"
+                    ]
+                ]);
+
+        await expect(executeCommand("rank leave",  {playerId: "0", groupId: "g"}))
+                .resolves
+                .toMatchObject(["グループから脱退しました。"]);
+
+        await expect(executeCommand("rank leave",  {playerId: "0", groupId: "g"}))
+                .resolves
+                .toMatchObject(["このグループに所属していません。"]);
     });
 });

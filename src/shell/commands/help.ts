@@ -24,6 +24,7 @@ export const help: Command = {
                 "mybest - 曲の情報を取得します。",
                 "ping - CHUNITHM Toolsの動作確認を行います。",
                 "profile - プレイヤーのプロフィールを表示します。",
+                "rank - グループ内のスコアランキングを表示します。",
             ];
         }
 
