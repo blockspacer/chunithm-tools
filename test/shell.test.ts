@@ -279,4 +279,28 @@ describe("シェル", () => {
                 .resolves
                 .toMatchObject(["このグループに所属していません。"]);
     });
+
+    test("score", () => {
+        return expect(Promise.all([
+                    executeCommand("score R", {}),
+                    executeCommand("score Q", {}),
+                    executeCommand("score Rage", {})
+                ]))
+                .resolves
+                .toMatchObject([
+                    [
+                        "曲が絞り切れませんでした。以下より該当の曲を選び、その真下のコマンドを入力してください。\n",
+                        "Radetzky Marsch\nscore /1\n",
+                        "RAGE OF DUST\nscore /2\n"
+                    ],
+                    [
+                        "曲が見つかりませんでした。"
+                    ],
+                    [
+                        "RAGE OF DUST",
+                        "動画: RDVideo",
+                        "画像: RDImage"
+                    ]
+                ]);
+    });
 });

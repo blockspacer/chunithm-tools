@@ -7,6 +7,7 @@ import {mybest} from "./mybest";
 import {ping} from "./ping";
 import {profile} from "./profile";
 import {rank} from "./rank";
+import {score} from "./score";
 
 export const commands: {[key: string]: Command} = {
     "ping": ping,
@@ -31,4 +32,6 @@ export const commands: {[key: string]: Command} = {
     "rank": rank,
     "r": rank,
     "ランキング": rank,
+
+    "score": score
 };
