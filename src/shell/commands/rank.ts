@@ -99,7 +99,7 @@ export const rank: Command = {
         }
 
         if (songs.length > 1) {
-            const choices = songs.map((song) => `${song.songName}\nmybest /${song.songId}\n`);
+            const choices = songs.map((song) => `${song.songName}\nrank /${song.songId}\n`);
 
             return [
                 "曲が絞り切れませんでした。以下より該当の曲を選び、その真下のコマンドを入力してください。\n",

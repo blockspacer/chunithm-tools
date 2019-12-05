@@ -257,8 +257,8 @@ describe("シェル", () => {
                     ["グループに既に参加しています。"],
                     [
                         "曲が絞り切れませんでした。以下より該当の曲を選び、その真下のコマンドを入力してください。\n",
-                        "Radetzky Marsch\nmybest /1\n",
-                        "RAGE OF DUST\nmybest /2\n"
+                        "Radetzky Marsch\nrank /1\n",
+                        "RAGE OF DUST\nrank /2\n"
                     ],
                     ["曲が見つかりませんでした。"],
                     [
