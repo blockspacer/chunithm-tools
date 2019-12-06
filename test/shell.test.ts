@@ -303,4 +303,31 @@ describe("シェル", () => {
                     ]
                 ]);
     });
+
+    test("songs", () => {
+        return expect(Promise.all([
+                    executeCommand("songs v11", {}),
+                    executeCommand("songs v11", {playerId: "0"}),
+                    executeCommand("songs d13-", {playerId: "0"}),
+                    executeCommand("songs s1007000-v-12", {playerId: "0"}),
+                    executeCommand("songs c0", {playerId: "0"}),
+                ]))
+                .resolves
+                .toMatchObject([
+                    [
+                        "Error: ",
+                        "プレイヤーデータを登録してからご利用ください。"
+                    ],
+                    [
+                        "Radetzky Marsch"
+                    ],
+                    [
+                        "BE MY BABY"
+                    ],
+                    [
+                        "RAGE OF DUST"
+                    ],
+                    []
+                ]);
+    });
 });
