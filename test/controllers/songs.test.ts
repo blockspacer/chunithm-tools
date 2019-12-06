@@ -1,10 +1,22 @@
+import {setScores} from "../../src/controllers/scores";
 import * as Songs from "../../src/controllers/songs";
 import {knex} from "../../src/knex_wrapper";
 import {Difficulty} from "../../src/models/difficulty";
 
 describe("曲データの取り扱い", () => {
+    beforeAll(() => {
+        return setScores("1", {
+            1: [[0, 0], [0, 0], [0, 0], [1000000, 0]],
+            2: [[0, 0], [0, 0], [0, 0], [1005000, 0]],
+            3: [[0, 0], [0, 0], [0, 0], [1010000, 0]]
+        });
+    });
+
     afterAll(() => {
-        return knex("songs").del();
+        return Promise.all([
+            knex("songs").del(),
+            knex("scores").del()
+        ]);
     });
 
     test("曲の作成", () => {
@@ -57,6 +69,51 @@ describe("曲データの取り扱い", () => {
                         genreId: 1
                     }
                 ], []
+            ]);
+    });
+
+    test("条件による曲の検索", () => {
+        return expect(Promise.all([
+                    Songs.getSongs("1", {minRateValue: 130}, Difficulty.MASTER),
+                    Songs.getSongs("1", {minRateValue: 115, maxRateValue: 125}, Difficulty.MASTER),
+                    Songs.getSongs("1", {minRateValue: 120, maxScore: 1005000}, Difficulty.MASTER)
+                ]))
+            .resolves
+            .toMatchObject([
+                [
+                    {
+                        songId: 3,
+                        songName: "BE MY BABY",
+                        difficulty: Difficulty.MASTER,
+                        rateValue: 130,
+                        notes: 2000,
+                        scoreVideo: "BMBVideo",
+                        scoreImage: "BMBImage",
+                        genreId: 2
+                    }
+                ], [
+                    {
+                        songId: 2,
+                        songName: "RAGE OF DUST",
+                        difficulty: Difficulty.MASTER,
+                        rateValue: 120,
+                        notes: 1500,
+                        scoreVideo: "RDVideo",
+                        scoreImage: "RDImage",
+                        genreId: 1
+                    }
+                ], [
+                    {
+                        songId: 2,
+                        songName: "RAGE OF DUST",
+                        difficulty: Difficulty.MASTER,
+                        rateValue: 120,
+                        notes: 1500,
+                        scoreVideo: "RDVideo",
+                        scoreImage: "RDImage",
+                        genreId: 1
+                    }
+                ],
             ]);
     });
 

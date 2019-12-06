@@ -154,6 +154,51 @@ export async function searchSongsBySongName(query: string, difficulty: Difficult
     return rows.map((row) => constructSong(row));
 }
 
+type Options = {
+    minScore?: number,
+    maxScore?: number,
+    minRateValue?: number,
+    maxRateValue?: number,
+    genre?: Genre
+};
+
+export async function getSongs(playerId: string, options: Options, difficulty: Difficulty): Promise<Song[]> {
+    const rows = await knex("scores")
+                        .innerJoin("songs", function() {
+                            this.on("songs.songid", "scores.songid");
+                            this.andOn("songs.difficulty", "scores.difficulty");
+                        })
+                        .select(
+                            "songs.songid",
+                            "songs.songname",
+                            "songs.difficulty",
+                            "songs.ratevalue",
+                            "songs.notes",
+                            "songs.scorevideourl",
+                            "songs.scoreimageurl",
+                            "songs.genreid")
+                        .where(function() {
+                            this.andWhere("scores.playerid", playerId);
+                            this.andWhereBetween(
+                                "scores.score",
+                                [options.minScore || 1, options.maxScore || 1010000]);
+                            this.andWhereBetween(
+                                "songs.ratevalue",
+                                [options.minRateValue || 0, options.maxRateValue || 999]);
+
+                            if (options.genre) {
+                                this.andWhere("scores.genre", options.genre);
+                            }
+                        })
+                        .andWhere("scores.difficulty", difficulty)
+                        .orderBy([
+                            {column: "songs.songid", order: "asc"},
+                            {column: "songs.difficulty", order: "asc"}
+                        ]);
+
+    return rows.map((row) => constructSong(row));
+}
+
 export async function searchSongs(query: string, difficulty: Difficulty = Difficulty.MASTER): Promise<Song[]> {
     if (query === "") {
         return [];
