@@ -43,7 +43,8 @@ describe("シェル", () => {
                     knex("scores").del(),
                     knex("players").del(),
                     knex("difficulty").del(),
-                    knex("groupmembers").del()
+                    knex("groupmembers").del(),
+                    knex("users").del()
                 ]);
     });
 
@@ -329,5 +330,40 @@ describe("シェル", () => {
                     ],
                     []
                 ]);
+    });
+
+    test("register", async () => {
+        expect.assertions(3);
+
+        await expect(Promise.all([
+                    executeCommand("register user,  password", {}),
+                    executeCommand("register user!, password", {playerId: "0"}),
+                    executeCommand("register user,  password！", {playerId: "0"}),
+                    executeCommand("register user,  password", {playerId: "0"})
+                ]))
+                .resolves
+                .toMatchObject([
+                    [
+                        "Error: ",
+                        "プレイヤーデータを登録してからご利用ください。"
+                    ],
+                    [
+                        "ユーザーIDが無効な文字を含んでいます。"
+                    ],
+                    [
+                        "パスワードが無効な文字を含んでいます。"
+                    ],
+                    [
+                        "登録に成功しました。"
+                    ]
+                ]);
+
+        await expect(executeCommand("register user, password", {playerId: "0"}))
+                .resolves
+                .toMatchObject(["ユーザー名は既に使用されています。"]);
+
+        await expect(executeCommand("register user2, password", {playerId: "0"}))
+                .resolves
+                .toMatchObject(["登録に成功しました。"]);
     });
 });

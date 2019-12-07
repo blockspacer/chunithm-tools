@@ -25,6 +25,7 @@ export const help: Command = {
                 "ping - CHUNITHM Toolsの動作確認を行います。",
                 "profile - プレイヤーのプロフィールを表示します。",
                 "rank - グループ内のスコアランキングを表示します。",
+                "register - Web版、ブックマークレットを利用するためのIDを登録します。",
                 "score - 譜面情報を表示します。",
                 "songs - ランダムに曲を表示します。",
             ];
