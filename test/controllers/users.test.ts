@@ -8,9 +8,9 @@ describe("ユーザーデータの取り扱い", () => {
 
     test("ユーザーデータの追加", () => {
         return expect(Promise.all([
-                Users.create("alice", "password1", "player1"),
-                Users.create("bob",   "password2", "player2"),
-                Users.create("chris", "password3", "player3")
+                Users.createUser("alice", "password1", "player1"),
+                Users.createUser("bob",   "password2", "player2"),
+                Users.createUser("chris", "password3", "player3")
             ]))
             .resolves
             .not.toThrowError();

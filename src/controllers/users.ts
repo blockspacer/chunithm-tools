@@ -3,18 +3,34 @@ import {bcrypt, compareBcrypt, sha256} from "../helper/hash";
 import {encodeJWT} from "../helper/jwt";
 import {knex} from "../knex_wrapper";
 
-export async function create(userId: string, plainPassword: string, playerId: string) {
+export async function createUser(userId: string, plainPassword: string, playerId: string): Promise<boolean> {
     const hashedPassword = await bcrypt(plainPassword);
 
     if (await exist(userId)) {
-        throw new ControllerError("The user with the UserID is already exists");
+        return false;
     }
 
-    await knex("users").insert({
-        userid: userId,
-        password: hashedPassword,
-        playerid: playerId
-    });
+    const rows = await knex("users")
+                    .count("userid as cnt")
+                    .where("playerid", playerId);
+
+    if (rows.length > 0 && rows[0].cnt > 0) {
+        await knex("users")
+                .update({
+                    userid: userId,
+                    password: hashedPassword
+                })
+                .where("playerid", playerId);
+    } else {
+        await knex("users")
+                .insert({
+                    userid: userId,
+                    password: hashedPassword,
+                    playerid: playerId
+                });
+    }
+
+    return true;
 }
 
 export async function exist(userId: string) {

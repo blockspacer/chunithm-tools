@@ -1,5 +1,5 @@
 import * as Express from "express";
-import {create} from "../../../controllers/users";
+import {createUser} from "../../../controllers/users";
 import {ControllerError} from "../../../exceptions";
 import {sha256} from "../../../helper/hash";
 
@@ -26,7 +26,7 @@ export default async function(req: Express.Request, res: Express.Response, next:
     const playerId = sha256(userId);
 
     try {
-        await create(userId, password, playerId);
+        await createUser(userId, password, playerId);
         res.status(200).json({status: "SUCCESS"});
     } catch (err) {
         if (err instanceof ControllerError) {
