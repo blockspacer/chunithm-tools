@@ -86,7 +86,6 @@ export const songs: Command = {
             }, {});
 
         const songs = await getSongs(context.playerId, options, Difficulty.MASTER);
-        console.log(options);
 
         return shuffleArray(songs).slice(0, count).map((song) => song.songName);
     }
