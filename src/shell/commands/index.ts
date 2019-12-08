@@ -10,6 +10,7 @@ import {rank} from "./rank";
 import {register} from "./register";
 import {score} from "./score";
 import {songs} from "./songs";
+import {werank} from "./werank";
 
 export const commands: {[key: string]: Command} = {
     "ping": ping,
@@ -40,4 +41,6 @@ export const commands: {[key: string]: Command} = {
     "score": score,
 
     "songs": songs,
+
+    "werank": werank,
 };

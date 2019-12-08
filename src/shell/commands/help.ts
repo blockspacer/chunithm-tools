@@ -28,6 +28,7 @@ export const help: Command = {
                 "register - Web版、ブックマークレットを利用するためのIDを登録します。",
                 "score - 譜面情報を表示します。",
                 "songs - ランダムに曲を表示します。",
+                "werank - World's Endのスコアランキングを表示します。",
             ];
         }
 

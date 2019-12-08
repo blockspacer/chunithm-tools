@@ -2,8 +2,11 @@ import {cacheDifficulty} from "../src/controllers/difficulty";
 import {setPlayer} from "../src/controllers/players";
 import {setScores} from "../src/controllers/scores";
 import {createSong} from "../src/controllers/songs";
+import {setWorldsEndScores} from "../src/controllers/worldsendscores";
+import {createWorldsEndSong} from "../src/controllers/worldsendsongs";
 import {knex} from "../src/knex_wrapper";
 import {ScoreList} from "../src/models/score_list";
+import {WorldsEndScoreList} from "../src/models/worldsendscore_list";
 import {executeCommand} from "../src/shell";
 
 describe("シェル", () => {
@@ -25,13 +28,33 @@ describe("シェル", () => {
             }
         ];
 
+        const worldsEndScores: WorldsEndScoreList[] = [
+            {
+                8001: [1000000, 0],
+                8002: [1002000, 0],
+                8003: [1004000, 0]
+            }, {
+                8001: [1002000, 0],
+                8002: [1004000, 0],
+                8003: [1000000, 0]
+            }, {
+                8001: [1004000, 0],
+                8002: [1000000, 0],
+                8003: [1002000, 0]
+            }
+        ];
+
         await Promise.all([
                     ...playerRates.map((rate, index) =>
                                             setPlayer(String(index), `player${index}`, rate, rate, "", 14, 13)),
                     ...scores.map((score, index) => setScores(String(index), score)),
+                    ...worldsEndScores.map((score, index) => setWorldsEndScores(String(index), score)),
                     createSong(1, "Radetzky Marsch", 20, 50, 80, 110, 1000, "RMVideo", "RMImage", 0),
                     createSong(2, "RAGE OF DUST", 30, 60, 90, 120, 1500, "RDVideo", "RDImage", 1),
-                    createSong(3, "BE MY BABY", 40, 70, 100, 130, 2000, "BMBVideo", "BMBImage", 2)
+                    createSong(3, "BE MY BABY", 40, 70, 100, 130, 2000, "BMBVideo", "BMBImage", 2),
+                    createWorldsEndSong(8001, "Radetzky Marsch「弾」", 1, 3, 2000, "WERMVideo", "WERMImage"),
+                    createWorldsEndSong(8002, "RAGE OF DUST「光」", 2, 4, 3000, "WERDVideo", "WERDImage"),
+                    createWorldsEndSong(8003, "BE MY BABY「狂」", 3, 5, 4000, "WEBMBVideo", "WEBMBImage"),
                 ]);
 
         await cacheDifficulty();
@@ -44,7 +67,9 @@ describe("シェル", () => {
                     knex("players").del(),
                     knex("difficulty").del(),
                     knex("groupmembers").del(),
-                    knex("users").del()
+                    knex("users").del(),
+                    knex("worldsendsongs").del(),
+                    knex("worldsendscores").del()
                 ]);
     });
 
@@ -365,5 +390,52 @@ describe("シェル", () => {
         await expect(executeCommand("register user2, password", {playerId: "0"}))
                 .resolves
                 .toMatchObject(["登録に成功しました。"]);
+    });
+
+    test("werank", async () => {
+        expect.assertions(4);
+
+        await expect(executeCommand("werank join",  {playerId: "0", groupId: "g"}))
+                .resolves
+                .toMatchObject(["グループに参加しました。"]);
+
+        await expect(Promise.all([
+                    executeCommand("werank join",  {}),
+                    executeCommand("werank join",  {playerId: "0"}),
+                    executeCommand("werank join",  {playerId: "0", groupId: "g"}),
+                    executeCommand("werank R",  {playerId: "0", groupId: "g"}),
+                    executeCommand("werank Q",  {playerId: "0", groupId: "g"}),
+                    executeCommand("werank /8003", {playerId: "0", groupId: "g"})
+                ]))
+                .resolves
+                .toMatchObject([
+                    [
+                        "Error: ",
+                        "プレイヤーデータを登録してからご利用ください。"
+                    ],
+                    [
+                        "Error: ",
+                        "グループ内でご利用ください。"
+                    ],
+                    ["グループに既に参加しています。"],
+                    [
+                        "曲が絞り切れませんでした。以下より該当の曲を選び、その真下のコマンドを入力してください。\n",
+                        "Radetzky Marsch「弾」\nwerank /8001\n",
+                        "RAGE OF DUST「光」\nwerank /8002\n"
+                    ],
+                    ["曲が見つかりませんでした。"],
+                    [
+                        "BE MY BABY「狂」",
+                        "play: 1004000"
+                    ]
+                ]);
+
+        await expect(executeCommand("werank leave",  {playerId: "0", groupId: "g"}))
+                .resolves
+                .toMatchObject(["グループから脱退しました。"]);
+
+        await expect(executeCommand("werank leave",  {playerId: "0", groupId: "g"}))
+                .resolves
+                .toMatchObject(["このグループに所属していません。"]);
     });
 });
