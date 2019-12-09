@@ -81,8 +81,13 @@ export function integerToDifficulty(difficulty: Difficulty) {
 
 export function difficultyNameToInteger(difficulty: string) {
     const length = difficulty.length;
+    const lowerDifficulty = difficulty.toLowerCase();
     const difficultyNames = ["basic", "advanced", "expert", "master"];
-    return difficultyNames.reduce<number>((prev, dif, index) => dif.slice(0, length) === difficulty ? index : prev, 3);
+    return difficultyNames.reduce<number>(
+                                (prev, dif, index) => dif.slice(0, length) === lowerDifficulty
+                                                    ? index
+                                                    : prev,
+                                3);
 }
 
 export function integerToEmblem(emblem: number) {
