@@ -438,4 +438,31 @@ describe("シェル", () => {
                 .resolves
                 .toMatchObject(["このグループに所属していません。"]);
     });
+
+    test("mybest", () => {
+        return expect(Promise.all([
+                    executeCommand("wemybest R",  {}),
+                    executeCommand("wemybest R",  {playerId: "0"}),
+                    executeCommand("wemybest Q",  {playerId: "0"}),
+                    executeCommand("wemybest /8003", {playerId: "0"})
+                ]))
+                .resolves
+                .toMatchObject([
+                    [
+                        "Error: ",
+                        "プレイヤーデータを登録してからご利用ください。"
+                    ],
+                    [
+                        "曲が絞り切れませんでした。以下より該当の曲を選び、その真下のコマンドを入力してください。\n",
+                        "Radetzky Marsch「弾」\nwemybest /8001\n",
+                        "RAGE OF DUST「光」\nwemybest /8002\n"
+                    ],
+                    [
+                        "曲が見つかりませんでした。"
+                    ],
+                    [
+                        "BE MY BABY「狂」: 1004000"
+                    ]
+                ]);
+    });
 });
