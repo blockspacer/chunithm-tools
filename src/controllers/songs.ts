@@ -110,6 +110,47 @@ export async function searchSongsBySongId(query: string, difficulty: Difficulty)
     return rows.map((row) => constructSong(row));
 }
 
+export async function createAlias(alias: string, songId: number): Promise<boolean> {
+    const rows = await knex("aliases")
+                        .count("alias as cnt")
+                        .where("alias", alias);
+
+    if (rows.length > 0 && rows[0].cnt > 0) {
+        return false;
+    }
+
+    await knex("aliases")
+            .insert({
+                alias,
+                songid: songId
+            });
+
+    return true;
+}
+
+export async function searchSongsByAlias(alias: string, difficulty: Difficulty): Promise<Song[] | null> {
+    const rows = await knex("songs")
+                        .innerJoin("aliases", "aliases.songid", "songs.songid")
+                        .select(
+                            "songs.songid",
+                            "songs.songname",
+                            "songs.difficulty",
+                            "songs.ratevalue",
+                            "songs.notes",
+                            "songs.scorevideourl",
+                            "songs.scoreimageurl",
+                            "songs.genreid")
+                        .where("aliases.alias", alias)
+                        .andWhere("songs.difficulty", difficulty)
+                        .orderBy("songs.songid", "asc");
+
+    if (rows.length === 0) {
+        return null;
+    }
+
+    return rows.map((row) => constructSong(row));
+}
+
 export async function searchSongsByExactSongName(query: string, difficulty: Difficulty): Promise<Song[] | null> {
     const rows = await knex("songs")
                         .select(
@@ -214,6 +255,7 @@ export async function searchSongs(query: string, difficulty: Difficulty = Diffic
 
     return await searchSongsBySongId(query, difficulty)
         || await searchSongsByExactSongName(query, difficulty)
+        || await searchSongsByAlias(query, difficulty)
         || await searchSongsBySongName(query, difficulty)
         || [];
 }

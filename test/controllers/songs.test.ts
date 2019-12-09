@@ -29,10 +29,21 @@ describe("曲データの取り扱い", () => {
             .not.toThrowError();
     });
 
+    test("曲の略称の登録", async () => {
+        expect.assertions(2);
+        await expect(Songs.createAlias("BMB", 3))
+                .resolves
+                .toBeTruthy();
+        await expect(Songs.createAlias("BMB", 3))
+                .resolves
+                .toBeFalsy();
+    });
+
     test("曲の検索", () => {
         return expect(Promise.all([
                     Songs.searchSongs("Radetzky Marsch"),
                     Songs.searchSongs("Ra", Difficulty.EXPERT),
+                    Songs.searchSongs("BMB"),
                     Songs.searchSongs("xqx")
                 ]))
             .resolves
@@ -67,6 +78,17 @@ describe("曲データの取り扱い", () => {
                         scoreVideo: "",
                         scoreImage: "",
                         genreId: 1
+                    }
+                ], [
+                    {
+                        songId: 3,
+                        songName: "BE MY BABY",
+                        difficulty: Difficulty.MASTER,
+                        rateValue: 130,
+                        notes: 2000,
+                        scoreVideo: "BMBVideo",
+                        scoreImage: "BMBImage",
+                        genreId: 2
                     }
                 ], []
             ]);
