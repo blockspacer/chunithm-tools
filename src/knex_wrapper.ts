@@ -3,7 +3,7 @@ import * as settings from "./knex_config";
 
 export const knex = Knex(
     process.env.NODE_ENV === "production" ? settings.production :
-                             "test" ?       settings.test :
+        process.env.NODE_ENV === "test"   ? settings.test :
                                             settings.development);
 
 export function onDuplicateKey(
