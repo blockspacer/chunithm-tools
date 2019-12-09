@@ -3,7 +3,11 @@
         <div class="item">
             <h2>ライバル</h2>
             <p>他のCHUNITHM Toolsユーザーとスコアを比較します。</p>
-            <p v-for="rival of rivals" :key="rival.rivalCode">{{rival.playerName}}</p>
+            <ul>
+                <li v-for="rival of rivals" :key="rival.rivalCode">
+                    <router-link :to="`/rivalcomp/${rival.rivalCode}`">{{rival.playerName}}</router-link>
+                </li>
+            </ul>
         </div>
         <div class="item">
             <h2>ライバルランキング</h2>
