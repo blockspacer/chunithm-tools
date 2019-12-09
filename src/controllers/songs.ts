@@ -163,11 +163,15 @@ type Options = {
 };
 
 export async function getSongs(playerId: string, options: Options, difficulty: Difficulty): Promise<Song[]> {
-    const rows = await knex("scores")
-                        .innerJoin("songs", function() {
+    const songs = options.minScore || options.maxScore
+                    ? knex("songs")
+                        .innerJoin("scores", function() {
                             this.on("songs.songid", "scores.songid");
                             this.andOn("songs.difficulty", "scores.difficulty");
                         })
+                    : knex("songs");
+
+    const rows = await songs
                         .select(
                             "songs.songid",
                             "songs.songname",
@@ -178,19 +182,23 @@ export async function getSongs(playerId: string, options: Options, difficulty: D
                             "songs.scoreimageurl",
                             "songs.genreid")
                         .where(function() {
-                            this.andWhere("scores.playerid", playerId);
-                            this.andWhereBetween(
-                                "scores.score",
-                                [options.minScore || 1, options.maxScore || 1010000]);
-                            this.andWhereBetween(
-                                "songs.ratevalue",
-                                [options.minRateValue || 0, options.maxRateValue || 999]);
+                            if (options.minScore || options.maxScore) {
+                                this.andWhere("scores.playerid", playerId);
+                                this.andWhereBetween(
+                                    "scores.score",
+                                    [options.minScore || 0, options.maxScore || 1010000]);
+                            }
+                            if (options.minRateValue || options.maxRateValue) {
+                                this.andWhereBetween(
+                                    "songs.ratevalue",
+                                    [options.minRateValue || 0, options.maxRateValue || 999]);
+                            }
 
                             if (options.genre) {
                                 this.andWhere("scores.genre", options.genre);
                             }
                         })
-                        .andWhere("scores.difficulty", difficulty)
+                        .andWhere("songs.difficulty", difficulty)
                         .orderBy([
                             {column: "songs.songid", order: "asc"},
                             {column: "songs.difficulty", order: "asc"}
