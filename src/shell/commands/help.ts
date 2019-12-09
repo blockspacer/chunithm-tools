@@ -27,6 +27,7 @@ export const help: Command = {
                 "rank - グループ内のスコアランキングを表示します。",
                 "register - Web版、ブックマークレットを利用するためのIDを登録します。",
                 "score - 譜面情報を表示します。",
+                "setscore - スコアを登録します。",
                 "songs - ランダムに曲を表示します。",
                 "wemybest - World's Endのスコアを取得します。",
                 "werank - World's Endのスコアランキングを表示します。",

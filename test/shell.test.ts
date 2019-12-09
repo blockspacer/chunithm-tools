@@ -465,4 +465,45 @@ describe("シェル", () => {
                     ]
                 ]);
     });
+
+    test("setscore", async () => {
+        expect.assertions(2);
+
+        await expect(Promise.all([
+                    executeCommand("setscore R, 1009500",  {}),
+                    executeCommand("setscore R, 1009500",  {playerId: "0"}),
+                    executeCommand("setscore Q, 1009500",  {playerId: "0"}),
+                    executeCommand("setscore /3, 1009500", {playerId: "0"}),
+                    executeCommand("setscore /3, EXPERT, 1009900",  {playerId: "0"})
+                ]))
+                .resolves
+                .toMatchObject([
+                    [
+                        "Error: ",
+                        "プレイヤーデータを登録してからご利用ください。"
+                    ],
+                    [
+                        "曲が絞り切れませんでした。以下より該当の曲を選び、その真下のコマンドを入力してください。\n",
+                        "Radetzky Marsch\nsetscore /1, master, 1009500\n",
+                        "RAGE OF DUST\nsetscore /2, master, 1009500\n"
+                    ],
+                    ["曲が見つかりませんでした。"],
+                    [
+                        "BE MY BABY: 1009500"
+                    ],
+                    [
+                        "BE MY BABY: 1009900"
+                    ]
+                ]);
+
+        await expect(executeCommand("mybest /3", {playerId: "0"}))
+                .resolves
+                .toMatchObject([
+                    "BE MY BABY",
+                    "MASTER: 1009500",
+                    "EXPERT: 1009900",
+                    "ADVANCED: 1009900",
+                    "BASIC: 1010000"
+                ]);
+    });
 });

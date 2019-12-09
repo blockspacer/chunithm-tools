@@ -9,6 +9,7 @@ import {profile} from "./profile";
 import {rank} from "./rank";
 import {register} from "./register";
 import {score} from "./score";
+import {setscore} from "./setscore";
 import {songs} from "./songs";
 import {wemybest} from "./wemybest";
 import {werank} from "./werank";
@@ -40,6 +41,8 @@ export const commands: {[key: string]: Command} = {
     "register": register,
 
     "score": score,
+
+    "setscore": setscore,
 
     "songs": songs,
 
