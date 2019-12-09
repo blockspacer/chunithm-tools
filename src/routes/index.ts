@@ -2,6 +2,7 @@ import * as BodyParser from "body-parser";
 import * as Express from "express";
 import {getConfig} from "../config";
 import api from "./api";
+import line from "./line";
 
 export const app = Express();
 
@@ -16,6 +17,7 @@ app.options("*", (_, res) => {
 });
 
 app.use("/api", api);
+app.use("/line", line);
 app.use("/", Express.static(process.cwd() + "/build/client"));
 
 app.use((_, res) => {
