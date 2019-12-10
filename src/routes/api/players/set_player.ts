@@ -10,7 +10,7 @@ export default async function(req: Express.Request, res: Express.Response, next:
 
     if (
         typeof token !== "string"
-        || validatePlayer(player)
+        || !validatePlayer(player)
     ) {
         res.status(400).json({});
         return;

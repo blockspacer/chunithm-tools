@@ -9,8 +9,9 @@ export function validateWorldsEndScoreList(scoreList: WorldsEndScoreList) {
         }
 
         if (
-            typeof scoreList[Number(songId)][0] === "number"
-            && typeof scoreList[Number(songId)][1] === "number"
+            typeof scoreList[Number(songId)][0] !== "number"
+            || typeof scoreList[Number(songId)][1] !== "number"
+            || scoreList[Number(songId)].length !== 2
         ) {
             return false;
         }

@@ -9,8 +9,7 @@ export default async function(req: Express.Request, res: Express.Response, next:
 
     if (
         typeof token !== "string"
-        || Array.isArray(scores)
-        || validateWorldsEndScoreList(scores)
+        || !validateWorldsEndScoreList(scores)
     ) {
         res.status(400).json({});
         return;
