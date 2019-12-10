@@ -158,7 +158,7 @@
             this.maxRate = integerToRate(player.maxRate);
             this.title = player.title;
             this.bestAverage = (bestAverage / 100).toFixed(4);
-            this.recentAverage = (player.currentRate * 4 - bestAverage * 3).toFixed(4);
+            this.recentAverage = ((player.currentRate * 4 - bestAverage * 3) / 100).toFixed(4);
             this.reachableRate = integerToRate(Math.floor((bestAverage * 3 + this.best[0].rate) / 4));
         }
 
