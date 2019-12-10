@@ -22,6 +22,7 @@
                     <td>到達可能レート</td><td>{{reachableRate}}</td>
                 </tr>
             </table>
+            <line-chart :chart-data="rateLogData" :chart-options="rateLogOptions" :height="200"></line-chart>
             <h2>ベスト枠</h2>
             <table>
                 <tr>
@@ -63,11 +64,18 @@
 <script lang="ts">
     import {Component, Vue} from 'vue-property-decorator';
     import request from "../../lib/request";
+    import LineChart from "../../components/LineChart.vue";
+    import * as Chart from "chart.js";
     import {Best} from "../../../models/best";
     import {Player, validatePlayer} from "../../../models/player";
     import {integerToRate, integerToRateValue} from '../../../helper/formatter';
+    import {RateLog} from '../../../models/ratelog';
 
-    @Component
+    @Component({
+        components: {
+            LineChart
+        }
+    })
     export default class extends Vue {
         ready = false;
         playerExists = false;
@@ -80,10 +88,57 @@
         reachableRate = "";
         best: Best[] = [];
         almostBest: Best[] = [];
+        rateLogData: Chart.ChartData = {};
+        rateLogOptions: Chart.ChartOptions = {
+            legend: {
+                display: false
+            },
+            scales: {
+                yAxes: [{
+                    gridLines: {
+                        color: "#000"
+                    },
+                    ticks: {
+                        fontColor: "#000"
+                    }
+                }],
+                xAxes: [{
+                    gridLines: {
+                        display: false,
+                        color: "#000"
+                    },
+                    ticks: {
+                        fontColor: "#000"
+                    }
+                }],
+            }
+        };
         readonly classes = ["basic", "advanced", "expert", "master"];
 
         integerToRate = integerToRate;
         integerToRateValue = integerToRateValue;
+
+        async rateLog() {
+            const token = window.localStorage.getItem("token");
+            const rateLog: RateLog[] = await request("/api/players/ratelog", {token});
+            this.rateLogData = 
+                    rateLog.reduce<Chart.ChartData>(
+                                            (acc, rate) => {
+                                                acc.labels!.push(rate.date.slice(-5));
+                                                acc.datasets![0].data!.push(parseFloat(integerToRate(rate.currentRate)));
+                                                return acc;
+                                            }, {
+                                                labels: [],
+                                                datasets: [
+                                                    {
+                                                        label: "レート",
+                                                        hoverBackgroundColor: "#F00",
+                                                        data: [],
+                                                        borderColor: "#000"
+                                                    }
+                                                ]
+                                            });
+        }
 
         async getPlayer() {
             const token = window.localStorage.getItem("token");
@@ -121,6 +176,7 @@
                 return;
             }
             this.getPlayer();
+            this.rateLog();
         }
 
         constructor() {
