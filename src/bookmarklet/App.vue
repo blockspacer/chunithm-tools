@@ -6,6 +6,7 @@
             </div>
             <div v-if="chunithmToolsToken">
                 <p><input type="button" value="データを送信" @click="sendData()"></p>
+                <p><input type="button" value="別のアカウントでログイン" @click="signout()"></p>
             </div>
             <div v-else>
                 <p class="input-name">CHUNITHM ToolsユーザーID</p>
@@ -67,6 +68,12 @@
             window.localStorage.setItem("token", token);
             this.chunithmToolsToken = token;
             this.log("サインインに成功しました。");
+        }
+
+        async signout() {
+            window.localStorage.setItem("token", "");
+            this.chunithmToolsToken = "";
+            this.log("サインアウトしました。");
         }
 
         private async sendPlayerData() {
