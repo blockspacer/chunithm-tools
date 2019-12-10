@@ -1,6 +1,7 @@
 import * as gulp from "gulp";
 import * as typescript from "gulp-typescript";
 import * as WebpackStream from "webpack-stream";
+import bookmarkletConfig from "./bookmarklet.webpack.config";
 import config from "./webpack.config";
 
 gulp.task("build-server", () => {
@@ -16,9 +17,16 @@ gulp.task("build-client", () => {
             .pipe(gulp.dest("./build/client"));
 });
 
-gulp.task("build", gulp.parallel([
+gulp.task("build-bookmarklet", () => {
+    return gulp.src("./src/bookmarklet/index.ts")
+            .pipe(WebpackStream(bookmarkletConfig))
+            .pipe(gulp.dest("./build/bookmarklet"));
+});
+
+gulp.task("build", gulp.series([
     gulp.task("build-server"),
-    gulp.task("build-client")
+    gulp.task("build-client"),
+    gulp.task("build-bookmarklet")
 ]));
 
 gulp.task("default", gulp.task("build"));

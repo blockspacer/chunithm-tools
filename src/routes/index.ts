@@ -16,9 +16,21 @@ app.options("*", (_, res) => {
     res.sendStatus(200);
 });
 
+app.use((_, res, next) => {
+    res.setHeader("Access-Control-Allow-Origin", "https://chunithm-net.com");
+    res.setHeader("Cache-Control", "no-cache");
+    next();
+});
+
 app.use("/api", api);
 app.use("/line", line);
 app.use("/", Express.static(process.cwd() + "/build/client"));
+
+app.use((_, res, next) => {
+    res.setHeader("Content-type", "text/javascript");
+    next();
+});
+app.use("/b.js", Express.static(process.cwd() + "/build/bookmarklet/index.js"));
 
 app.use((_, res) => {
     res.status(404);
