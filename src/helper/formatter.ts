@@ -30,7 +30,7 @@ export function scoreToInteger(score: string) {
 }
 
 export function integerToRate(rate: number) {
-    return String(Math.floor(rate / 100)) + "." + ("0" + String(rate % 100)).slice(-2);
+    return String(Math.floor(rate / 100)) + "." + ("0" + String(Math.floor(rate % 100))).slice(-2);
 }
 
 export function integerToRateValue(rateValue: number) {
