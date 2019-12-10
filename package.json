@@ -5,6 +5,7 @@
     "main": "index.js",
     "scripts": {
         "test": "knex seed:run && jest -i",
+        "migrate-2.1": "ts-node ./scripts/migrate.ts",
         "build": "gulp",
         "start": "node build/index.js"
     },
@@ -40,7 +41,7 @@
         "style-loader": "^1.0.0",
         "ts-jest": "^24.1.0",
         "ts-loader": "^6.2.1",
-        "ts-node": "^8.4.1",
+        "ts-node": "^8.5.4",
         "tslint": "^5.20.0",
         "typescript": "^3.6.3",
         "vue": "^2.6.10",
