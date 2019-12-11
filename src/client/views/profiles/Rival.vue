@@ -24,6 +24,13 @@
                 {{score.playerName}}: {{score.score}}
             </p>
         </div>
+        <div class="item">
+            <h2>ライバル追加</h2>
+            <p><input type="text" v-model="rivalInput"></p>
+            <p><input type="button" value="追加" @click="addRival()"></p>
+            <p>あなたのライバルコード {{rivalCode}}</p>
+            <p><input type="button" value="再発行(以前のものは失効します)" @click="issueRivalCode()"></p>
+        </div>
         <div class="overlay" v-if="dialog" @click="dialog=false">
             <div class="dialog">
                 <p v-for="song in songs" :key="song.songId">
@@ -49,6 +56,8 @@
         dialog = false;
         songName = "";
         resultName = "";
+        rivalInput = "";
+        rivalCode = "";
         difficulty: Difficulty = Difficulty.MASTER;
         ranking: RankingScore[] = [];
         songs: Song[] = [];
@@ -87,6 +96,37 @@
             this.resultName = song.songName;
         }
 
+        async issueRivalCode() {
+            const token = window.localStorage.getItem("token");
+
+            this.rivalCode = await request("/api/rivals/issue_code", {
+                                        token: token
+                                    });
+        }
+
+        async getRivalCode() {
+            const token = window.localStorage.getItem("token");
+
+            this.rivalCode = await request("/api/rivals/get_code", {
+                                        token: token
+                                    });
+        }
+
+        async addRival() {
+            const token = window.localStorage.getItem("token");
+
+            const result = await request("/api/rivals/add", {
+                                        token: token,
+                                        rivalCode: this.rivalInput
+                                    });
+
+            if (result.status === "SUCCESS") {
+                alert("ライバルを追加しました。");
+            } else {
+                alert("ライバルの追加に失敗しました。");
+            }
+        }
+
         async getRivals() {
             const token = window.localStorage.getItem("token");
 
@@ -107,6 +147,7 @@
                 return;
             }
             await this.getRivals();
+            await this.getRivalCode();
             this.ready = true;
         }
 
