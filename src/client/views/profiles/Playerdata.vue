@@ -126,15 +126,25 @@
                                             (acc, rate) => {
                                                 acc.labels!.push(rate.date.slice(-5));
                                                 acc.datasets![0].data!.push(parseFloat(integerToRate(rate.currentRate)));
+                                                acc.datasets![1].data!.push(parseFloat(integerToRate(rate.maxRate)));
                                                 return acc;
                                             }, {
                                                 labels: [],
                                                 datasets: [
                                                     {
-                                                        label: "レート",
-                                                        hoverBackgroundColor: "#F00",
+                                                        label: "現在レート",
+                                                        hoverBackgroundColor: "#00A",
+                                                        backgroundColor: "rgba(0, 0, 150, 0.1)",
                                                         data: [],
-                                                        borderColor: "#000"
+                                                        borderColor: "#00C",
+                                                        lineTension: 0.1
+                                                    }, {
+                                                        label: "最大レート",
+                                                        hoverBackgroundColor: "#A00",
+                                                        backgroundColor: "rgba(150, 0, 0, 0.1)",
+                                                        data: [],
+                                                        borderColor: "#C00",
+                                                        lineTension: 0.1
                                                     }
                                                 ]
                                             });
