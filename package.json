@@ -7,7 +7,8 @@
         "test": "knex seed:run && jest -i",
         "migrate-2.1": "ts-node ./scripts/migrate.ts",
         "build": "gulp",
-        "start": "node build/index.js"
+        "start": "node build/index.js",
+        "difficulty": "node build/scripts/difficulty.js"
     },
     "author": "Raclett3 <im@s283.net>",
     "license": "MIT",
