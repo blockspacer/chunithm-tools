@@ -340,8 +340,7 @@
             this.chunithmToolsToken = token;
         }
 
-        constructor() {
-            super();
+        mounted() {
             this.init();
         }
     }

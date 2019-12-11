@@ -78,8 +78,7 @@
             this.ready = true;
         }
 
-        constructor() {
-            super();
+        mounted() {
             this.init();
         }
     }

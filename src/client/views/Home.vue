@@ -80,8 +80,7 @@
             this.getPlayer();
         }
 
-        constructor() {
-            super();
+        mounted() {
             this.init();
         }
     }

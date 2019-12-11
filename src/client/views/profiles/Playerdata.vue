@@ -189,8 +189,7 @@
             this.rateLog();
         }
 
-        constructor() {
-            super();
+        mounted() {
             this.init();
         }
     }

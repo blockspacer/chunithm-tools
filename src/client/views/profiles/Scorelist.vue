@@ -145,8 +145,7 @@
             await this.getScore();
         }
 
-        constructor() {
-            super();
+        mounted() {
             this.init();
         }
     }

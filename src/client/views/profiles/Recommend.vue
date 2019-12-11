@@ -65,8 +65,7 @@
             await this.getRecommend();
         }
 
-        constructor() {
-            super();
+        mounted() {
             this.init();
         }
     }
