@@ -15,6 +15,7 @@
                 <li><router-link to="/difficulty">適正難易度</router-link></li>
                 <li><router-link to="/calcscore">スコア計算</router-link></li>
                 <li><router-link to="/shell">シェル</router-link></li>
+                <li><router-link to="/statistics">統計</router-link></li>
             </ul>
             <p><b>ログイン必須</b></p>
             <ul>
