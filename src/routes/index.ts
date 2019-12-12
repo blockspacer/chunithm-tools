@@ -3,6 +3,7 @@ import * as Express from "express";
 import {getConfig} from "../config";
 import api from "./api";
 import line from "./line";
+import linelogin from "./linelogin";
 
 export const app = Express();
 
@@ -24,6 +25,7 @@ app.use((_, res, next) => {
 
 app.use("/api", api);
 app.use("/line", line);
+app.use("/linelogin", linelogin);
 app.use("/", Express.static(process.cwd() + "/build/client"));
 
 app.use((_, res, next) => {

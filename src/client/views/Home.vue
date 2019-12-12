@@ -17,6 +17,7 @@
                 <p class="input-name">パスワード</p>
                 <p><input type="password" v-model="password"></p>
                 <p><input type="button" @click="signin()" value="ログイン"></p>
+                <p><input type="button" @click="linelogin()" value="LINEログイン"></p>
             </div>
         </div>
     </div>
@@ -60,12 +61,20 @@
             this.getPlayer();
         }
 
+        linelogin() {
+            window.location.href = "/api/users/linelogin";
+        }
+
         signout() {
             this.signedin = false;
             window.localStorage.setItem("token", "");
         }
 
         async init() {
+            const queryToken = this.$route.query.token;
+            if (typeof queryToken === "string") {
+                window.localStorage.setItem("token", queryToken);
+            }
             const token = window.localStorage.getItem("token");
             if (token === null) {
                 this.ready = true;

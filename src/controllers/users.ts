@@ -68,6 +68,10 @@ export async function signIn(userId: string, plainPassword: string) {
     return encodeJWT(rows[0].playerid);
 }
 
+export async function signInByPlayerId(playerId: string) {
+    return encodeJWT(playerId);
+}
+
 export async function getPlayerId(userId: string) {
     const rows = await knex("users")
                         .select("playerid")
