@@ -57,7 +57,7 @@
         }
 
         async signin() {
-            const token = await this.request("https://dev.raclett3.com/api/users/signin", {
+            const token = await this.request("https://ctdev.raclett3.com/api/users/signin", {
                                         userId: this.userid,
                                         password: this.password
                                     }) || null;
@@ -118,7 +118,7 @@
                 }
             }
 
-            await this.request("https://dev.raclett3.com/api/players/set_player", {
+            await this.request("https://ctdev.raclett3.com/api/players/set_player", {
                                     token: this.chunithmToolsToken,
                                     player: player
                                 });
@@ -145,7 +145,7 @@
                 });
             }
 
-            await this.request("https://dev.raclett3.com/api/scores/set_history", {
+            await this.request("https://ctdev.raclett3.com/api/scores/set_history", {
                                     token: this.chunithmToolsToken,
                                     history: history
                                 });
@@ -206,7 +206,7 @@
                 }
             }
 
-            await this.request("https://dev.raclett3.com/api/scores/set_scores", {
+            await this.request("https://ctdev.raclett3.com/api/scores/set_scores", {
                                     token: this.chunithmToolsToken,
                                     scores: scores
                                 });
@@ -260,7 +260,7 @@
                 }
             }
 
-            await this.request("https://dev.raclett3.com/api/scores/worldsend/set_scores", {
+            await this.request("https://ctdev.raclett3.com/api/scores/worldsend/set_scores", {
                                     token: this.chunithmToolsToken,
                                     scores: scores
                                 });
@@ -333,7 +333,7 @@
             if (token === null) {
                 return;
             }
-            const verify = await this.request("https://dev.raclett3.com/api/users/verify_token", {token});
+            const verify = await this.request("https://ctdev.raclett3.com/api/users/verify_token", {token});
             if (verify.status === "FAILED") {
                 return;
             }
