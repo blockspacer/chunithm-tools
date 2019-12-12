@@ -58,28 +58,30 @@ export async function getWorldsEndScores(playerId: string, options: Options): Pr
 export async function setWorldsEndScores(playerId: string, scores: WorldsEndScoreList) {
     const trx = await knex.transaction();
 
-    for (const songId in scores) {
-        if (scores.hasOwnProperty(songId)) {
-            await onDuplicateKey(
-                "worldsendscores",
-                {
-                    playerid: playerId,
-                    songid: Number(songId),
-                }, {
-                    score: scores[Number(songId)][0],
-                    mark: scores[Number(songId)][1]
-                },
-                trx
-            );
+    try {
+        for (const songId in scores) {
+            if (scores.hasOwnProperty(songId)) {
+                await onDuplicateKey(
+                    "worldsendscores",
+                    {
+                        playerid: playerId,
+                        songid: Number(songId),
+                    }, {
+                        score: scores[Number(songId)][0],
+                        mark: scores[Number(songId)][1]
+                    },
+                    trx
+                );
+            }
         }
+        await trx.commit();
+    } catch (err) {
+        await trx.rollback();
+        throw err;
     }
-
-    await trx.commit();
 }
 
 export async function setSingleWorldsEndScore(playerId: string, songId: number, score: number) {
-    const trx = await knex.transaction();
-
     await onDuplicateKey(
         "worldsendscores",
         {
@@ -88,9 +90,6 @@ export async function setSingleWorldsEndScore(playerId: string, songId: number, 
         }, {
             score,
             mark: 0
-        },
-        trx
+        }
     );
-
-    await trx.commit();
 }

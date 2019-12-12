@@ -87,31 +87,34 @@ export async function setScores(playerId: string, scores: ScoreList) {
 
     const trx = await knex.transaction();
 
-    for (const songId in scores) {
-        if (scores.hasOwnProperty(songId)) {
-            for (const difficulty of difficulties) {
-                await onDuplicateKey(
-                    "scores",
-                    {
-                        playerid: playerId,
-                        songid: Number(songId),
-                        difficulty
-                    }, {
-                        score: scores[Number(songId)][difficulty][0],
-                        mark: scores[Number(songId)][difficulty][1]
-                    },
-                    trx
-                );
+    try {
+        for (const songId in scores) {
+            if (scores.hasOwnProperty(songId)) {
+                for (const difficulty of difficulties) {
+                    await onDuplicateKey(
+                        "scores",
+                        {
+                            playerid: playerId,
+                            songid: Number(songId),
+                            difficulty
+                        }, {
+                            score: scores[Number(songId)][difficulty][0],
+                            mark: scores[Number(songId)][difficulty][1]
+                        },
+                        trx
+                    );
+                }
             }
         }
-    }
 
-    await trx.commit();
+        await trx.commit();
+    } catch (err) {
+        await trx.rollback();
+        throw err;
+    }
 }
 
 export async function setSingleScore(playerId: string, songId: number, difficulty: Difficulty, score: number) {
-    const trx = await knex.transaction();
-
     await onDuplicateKey(
         "scores",
         {
@@ -121,11 +124,8 @@ export async function setSingleScore(playerId: string, songId: number, difficult
         }, {
             score,
             mark: 0
-        },
-        trx
+        }
     );
-
-    await trx.commit();
 }
 
 export async function getDifference(playerId: string): Promise<Difference[]> {
@@ -174,50 +174,54 @@ export async function setDifference(playerId: string, scores: ScoreList) {
     const difficulties = [Difficulty.BASIC, Difficulty.ADVANCED, Difficulty.EXPERT, Difficulty.MASTER];
 
     const trx = await knex.transaction();
+    try {
+        await trx("differences")
+                .delete()
+                .where({playerid: playerId});
 
-    await trx("differences")
-            .delete()
-            .where({playerid: playerId});
+        await trx("differences")
+                .insert(function(this: any) {
+                    this.select(
+                            "playerid",
+                            "songid",
+                            "difficulty",
+                            "score",
+                            "score"
+                        )
+                        .from("scores")
+                        .where({
+                            playerid: playerId
+                        });
+                });
 
-    await trx("differences")
-            .insert(function(this: any) {
-                this.select(
-                        "playerid",
-                        "songid",
-                        "difficulty",
-                        "score",
-                        "score"
-                    )
-                    .from("scores")
-                    .where({
-                        playerid: playerId
-                    });
-            });
-
-    for (const songId in scores) {
-        if (scores.hasOwnProperty(songId)) {
-            for (const difficulty of difficulties) {
-                await onDuplicateKey(
-                    "differences",
-                    {
-                        playerid: playerId,
-                        songid: Number(songId),
-                        difficulty,
-                        oldscore: 0
-                    }, {
-                        newscore: scores[Number(songId)][difficulty][0]
-                    },
-                    trx
-                );
+        for (const songId in scores) {
+            if (scores.hasOwnProperty(songId)) {
+                for (const difficulty of difficulties) {
+                    await onDuplicateKey(
+                        "differences",
+                        {
+                            playerid: playerId,
+                            songid: Number(songId),
+                            difficulty,
+                            oldscore: 0
+                        }, {
+                            newscore: scores[Number(songId)][difficulty][0]
+                        },
+                        trx
+                    );
+                }
             }
         }
+
+        await trx("differences")
+                .delete()
+                .where(knex.raw("newscore <= oldscore"));
+
+        await trx.commit();
+    } catch (err) {
+        trx.rollback();
+        throw err;
     }
-
-    await trx.commit();
-
-    await knex("differences")
-            .delete()
-            .where(knex.raw("newscore <= oldscore"));
 }
 
 export async function setHistories(playerId: string, history: HistoryList) {
@@ -249,26 +253,31 @@ export async function setHistories(playerId: string, history: HistoryList) {
 
     const trx = await knex.transaction();
 
-    for (const score of history) {
-        if (!/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}$/.test(score.time)) {
-            continue;
+    try {
+        for (const score of history) {
+            if (!/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}$/.test(score.time)) {
+                continue;
+            }
+
+            if (score.time > lastTime) {
+                await trx("histories")
+                        .insert({
+                            playerid: playerId,
+                            songname: score.songName,
+                            difficulty: score.difficulty,
+                            time: score.time,
+                            score: score.score
+                        });
+
+                lastTime = score.time;
+            }
         }
 
-        if (score.time > lastTime) {
-            await trx("histories")
-                    .insert({
-                        playerid: playerId,
-                        songname: score.songName,
-                        difficulty: score.difficulty,
-                        time: score.time,
-                        score: score.score
-                    });
-
-            lastTime = score.time;
-        }
+        await trx.commit();
+    } catch (err) {
+        trx.rollback();
+        throw err;
     }
-
-    await trx.commit();
 }
 
 export async function getHistories(playerId: string, count: number): Promise<History[]> {
