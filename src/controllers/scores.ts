@@ -402,3 +402,23 @@ export async function statistics(songId: number, borders: Array<[string, number]
 
     return count;
 }
+
+export async function getBorderedScoreCount(songId: number, borders: number[]): Promise<Array<[number, number]>> {
+    const result: Array<[number, number]> = [];
+
+    for (const border of borders) {
+        const rows = await knex("scores")
+                            .count("score as cnt")
+                            .where("songid", String(songId))
+                            .andWhere("difficulty", Difficulty.MASTER)
+                            .andWhereBetween("score", [
+                                    border,
+                                    result.length ? result[result.length - 1][0] - 1 : 1010000
+                                ])
+                            .orderBy("difficulty", "asc");
+
+        result.push([border, rows.length && Number(rows[0].cnt)]);
+    }
+
+    return result;
+}

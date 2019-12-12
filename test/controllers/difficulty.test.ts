@@ -1,6 +1,6 @@
 import * as DifficultyModel from "../../src/controllers/difficulty";
 import {setPlayer} from "../../src/controllers/players";
-import {setScores} from "../../src/controllers/scores";
+import {getBorderedScoreCount, setScores} from "../../src/controllers/scores";
 import {createSong} from "../../src/controllers/songs";
 import {knex} from "../../src/knex_wrapper";
 import {Difficulty} from "../../src/models/difficulty";
@@ -68,6 +68,39 @@ describe("曲の適正難易度の算出", () => {
                 1500,
                 1500,
                 1298
+            ]);
+    });
+
+    test("スコアの統計", () => {
+        return expect(Promise.all([
+                getBorderedScoreCount(1, [1007500, 1005000, 1000000]),
+                getBorderedScoreCount(2, [1007500, 1005000, 1000000]),
+                getBorderedScoreCount(3, [1007500, 1005000, 1000000])
+            ]))
+            .resolves
+            .toMatchObject([
+                [[1007500, 1], [1005000, 2], [1000000, 0]],
+                [[1007500, 1], [1005000, 2], [1000000, 0]],
+                [[1007500, 1], [1005000, 2], [1000000, 0]]
+            ]);
+    });
+
+    test("レートごとのスコアの統計", () => {
+        const result = [
+            [1500, 1005000],
+            [1550, 1009000]
+        ];
+
+        return expect(Promise.all([
+                DifficultyModel.statistics(1),
+                DifficultyModel.statistics(2),
+                DifficultyModel.statistics(3)
+            ]))
+            .resolves
+            .toMatchObject([
+                result,
+                result,
+                result
             ]);
     });
 

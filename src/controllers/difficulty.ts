@@ -56,6 +56,21 @@ export async function cacheDifficulty() {
     }
 }
 
+export async function statistics(songId: number): Promise<Array<[number, number]>> {
+    const rates = [
+        1310, 1320, 1330, 1340, 1350, 1360, 1370, 1380, 1390, 1400,
+        1410, 1420, 1430, 1440, 1450, 1460, 1470, 1480, 1490, 1500,
+        1510, 1520, 1530, 1540, 1550, 1560, 1570, 1580, 1590];
+
+    const rows = await knex("difficulty")
+                        .select("rate", "score")
+                        .where("songid", songId)
+                        .andWhere("rate", "in", rates)
+                        .orderBy("rate", "asc");
+
+    return rows.map((row) => [Number(row.rate), Number(row.score)]);
+}
+
 export async function getDifficulty(songId: number, score: number) {
     const rows = await knex("difficulty")
                         .select("rate")
