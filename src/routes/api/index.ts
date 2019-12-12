@@ -3,6 +3,7 @@ import players from "./players";
 import {rateLimit} from "./rate_limit";
 import rivals from "./rivals";
 import scores from "./scores";
+import shell from "./shell";
 import songs from "./songs";
 import users from "./users";
 
@@ -15,6 +16,7 @@ router.use("/players", players);
 router.use("/songs", songs);
 router.use("/scores", scores);
 router.use("/rivals", rivals);
+router.post("/shell", shell);
 
 router.use((_, res) => {
     res.status(404);

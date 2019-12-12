@@ -4,6 +4,7 @@ import Border from "./views/features/Border.vue";
 import Calcscore from "./views/features/Calcscore.vue";
 import Difficulty from "./views/features/Difficulty.vue";
 import Random from "./views/features/Random.vue";
+import Shell from "./views/features/Shell.vue";
 import Home from "./views/Home.vue";
 import NotFound from "./views/NotFound.vue";
 import Difference from "./views/profiles/Difference.vue";
@@ -28,6 +29,7 @@ const router = new Router({
         {path: "/signup", component: Signup},
         {path: "/border", component: Border},
         {path: "/random", component: Random},
+        {path: "/shell", component: Shell},
         {path: "/difficulty", component: Difficulty},
         {path: "/calcscore", component: Calcscore},
         {path: "/playerdata", component: Playerdata},
