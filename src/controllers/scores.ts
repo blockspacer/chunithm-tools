@@ -57,7 +57,7 @@ export async function getScores(playerId: string, options: Options): Promise<Sco
                             this.andWhere("scores.playerid", playerId);
                             this.andWhereBetween(
                                 "scores.score",
-                                [options.minScore || 1, options.maxScore || 1010000]);
+                                [options.minScore || 0, options.maxScore || 1010000]);
                             this.andWhereBetween(
                                 "songs.ratevalue",
                                 [options.minRateValue || 0, options.maxRateValue || 999]);
