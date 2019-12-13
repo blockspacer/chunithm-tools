@@ -28,6 +28,7 @@
                 <li><router-link to="/rival">ライバル</router-link></li>
                 <li><router-link to="/worldsendscorelist">WORLD'S ENDスコア一覧</router-link></li>
                 <li><router-link to="/worldsendregisterscore">WORLD'S ENDスコア登録</router-link></li>
+                <li><router-link to="/overpower">オーバーパワー</router-link></li>
             </ul>
         </div>
     </div>

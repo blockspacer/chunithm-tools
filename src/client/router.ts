@@ -9,6 +9,7 @@ import Statistics from "./views/features/Statistics.vue";
 import Home from "./views/Home.vue";
 import NotFound from "./views/NotFound.vue";
 import Difference from "./views/profiles/Difference.vue";
+import Overpower from "./views/profiles/Overpower.vue";
 import Playerdata from "./views/profiles/Playerdata.vue";
 import Recommend from "./views/profiles/Recommend.vue";
 import Registerscore from "./views/profiles/Registerscore.vue";
@@ -44,6 +45,7 @@ const router = new Router({
         {path: "/rivalcomp/:rival", component: Rivalcomp},
         {path: "/worldsendscorelist", component: Worldsendscorelist},
         {path: "/worldsendregisterscore", component: Worldsendregisterscore},
+        {path: "/overpower", component: Overpower},
         {path: "*", component: NotFound}
     ]
 });
