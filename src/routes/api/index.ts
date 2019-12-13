@@ -17,6 +17,7 @@ router.use("/songs", songs);
 router.use("/scores", scores);
 router.use("/rivals", rivals);
 router.post("/shell", shell);
+router.use("/bookmarklet/*/b.js", Express.static(process.cwd() + "/build/bookmarklet/index.js"));
 
 router.use((_, res) => {
     res.status(404);
