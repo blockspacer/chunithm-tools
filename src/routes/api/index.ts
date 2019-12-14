@@ -5,6 +5,7 @@ import rivals from "./rivals";
 import scores from "./scores";
 import shell from "./shell";
 import songs from "./songs";
+import twitter from "./twitter";
 import users from "./users";
 
 const router = Express.Router();
@@ -16,6 +17,7 @@ router.use("/players", players);
 router.use("/songs", songs);
 router.use("/scores", scores);
 router.use("/rivals", rivals);
+router.use("/twitter", twitter);
 router.post("/shell", shell);
 router.use("/bookmarklet/*/b.js", Express.static(process.cwd() + "/build/bookmarklet/index.js"));
 
