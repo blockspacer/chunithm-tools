@@ -17,6 +17,7 @@ import Rival from "./views/profiles/Rival.vue";
 import Rivalcomp from "./views/profiles/Rivalcomp.vue";
 import Scorehistory from "./views/profiles/Scorehistory.vue";
 import Scorelist from "./views/profiles/Scorelist.vue";
+import Settings from "./views/profiles/Settings.vue";
 import Worldsendregisterscore from "./views/profiles/Worldsendregisterscore.vue";
 import Worldsendscorelist from "./views/profiles/Worldsendscorelist.vue";
 import Signin from "./views/Signin.vue";
@@ -46,6 +47,7 @@ const router = new Router({
         {path: "/worldsendscorelist", component: Worldsendscorelist},
         {path: "/worldsendregisterscore", component: Worldsendregisterscore},
         {path: "/overpower", component: Overpower},
+        {path: "/settings", component: Settings},
         {path: "*", component: NotFound}
     ]
 });
