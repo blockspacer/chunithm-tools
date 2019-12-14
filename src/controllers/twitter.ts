@@ -97,7 +97,7 @@ export async function postToTwitter(playerId: string, text: string, mediaURI: st
     for (let i = 0; i < length; i++) {
         await client.post("media/upload", {
             command: "APPEND",
-            mediaId,
+            media_id: mediaId,
             media: decodedData.slice(i * 1000000, (i + 1) * 1000000),
             segment_index: i
         });
@@ -105,7 +105,7 @@ export async function postToTwitter(playerId: string, text: string, mediaURI: st
 
     const final = await client.post("media/upload", {
         command: "FINALIZE",
-        mediaId
+        media_id: mediaId
     });
 
     if (!("media_id_string" in final)) {
