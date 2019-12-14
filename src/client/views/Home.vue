@@ -80,6 +80,9 @@
             const queryToken = this.$route.query.token;
             if (typeof queryToken === "string") {
                 window.localStorage.setItem("token", queryToken);
+                const query = Object.assign({}, this.$route.query);
+                delete query.token;
+                this.$router.replace({query});
             }
             const token = window.localStorage.getItem("token");
             if (token === null) {

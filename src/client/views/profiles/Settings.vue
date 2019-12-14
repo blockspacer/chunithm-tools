@@ -53,6 +53,9 @@
             const twitterToken = this.$route.query.twitter;
             if (typeof twitterToken === "string") {
                 await request("/api/twitter/enable_token", {token, twitterToken});
+                const query = Object.assign({}, this.$route.query);
+                delete query.twitter;
+                this.$router.replace({query});
             }
             if (token === null) {
                 alert("サインインしてからご利用ください。");
