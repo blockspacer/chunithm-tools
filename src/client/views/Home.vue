@@ -18,6 +18,7 @@
                 <p><input type="password" v-model="password"></p>
                 <p><input type="button" @click="signin()" value="ログイン"></p>
                 <p><input type="button" @click="linelogin()" value="LINEログイン"></p>
+                <p><input type="button" @click="twitterlogin()" value="Twitterログイン"></p>
                 <p class="center"><router-link to="/signup">アカウントを作成します</router-link></p>
             </div>
         </div>
@@ -64,6 +65,10 @@
 
         linelogin() {
             window.location.href = "/api/users/linelogin";
+        }
+
+        twitterlogin() {
+            window.location.href = "/auth/signin";
         }
 
         signout() {
