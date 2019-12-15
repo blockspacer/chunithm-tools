@@ -17,6 +17,10 @@
             <p><input type="button" @click="submit(songName)" value="登録"></p>
             <p class="center">{{result}}</p>
         </div>
+        <div class="item center">
+            <p>または、以下のブックマークレットをCHUNITHM Toolsで実行してスコアを登録してください。</p>
+            <pre>javascript:(function(){s=document.createElement('script');s.src='https://chunithmtools.net/b.js';s.setAttribute('crossorigin','anonymous');document.body.appendChild(s)})();</pre>
+        </div>
         <div class="overlay" v-if="dialog" @click="dialog=false">
             <div class="dialog">
                 <p v-for="song in songs" :key="song.songId">
