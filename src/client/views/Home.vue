@@ -6,20 +6,29 @@
             <p v-else>プレイヤーデータが登録されていません。以下のブックマークレットを用いてプレイヤーデータを登録してください。</p>
             <p><a href="javascript:void(0)" @click="signout()">ログアウト</a></p>
         </div>
-        <div class="home" v-else>
-            <div class="float-left">
-                <h2>CHUNITHM Toolsのスコアを分析</h2>
-                <p>CHUNITHM ToolsはCHUNITHMのスコアを分析し、あなたの上達の手助けとなる情報を提供します。</p>
+        <div v-else>
+            <div class="home">
+                <div class="float-left">
+                    <h2>CHUNITHM Toolsのスコアを分析</h2>
+                    <p>CHUNITHM ToolsはCHUNITHMのスコアを分析し、あなたの上達の手助けとなる情報を提供します。</p>
+                </div>
+                <div class="float-right item">
+                    <p class="input-name">ユーザーID</p>
+                    <p><input type="text" v-model="userid"></p>
+                    <p class="input-name">パスワード</p>
+                    <p><input type="password" v-model="password"></p>
+                    <p><input type="button" @click="signin()" value="ログイン"></p>
+                    <p><input type="button" @click="linelogin()" value="LINEログイン"></p>
+                    <p><input type="button" @click="twitterlogin()" value="Twitterログイン"></p>
+                    <p class="center"><router-link to="/signup">アカウントを作成します</router-link></p>
+                </div>
             </div>
-            <div class="float-right item">
-                <p class="input-name">ユーザーID</p>
-                <p><input type="text" v-model="userid"></p>
-                <p class="input-name">パスワード</p>
-                <p><input type="password" v-model="password"></p>
-                <p><input type="button" @click="signin()" value="ログイン"></p>
-                <p><input type="button" @click="linelogin()" value="LINEログイン"></p>
-                <p><input type="button" @click="twitterlogin()" value="Twitterログイン"></p>
-                <p class="center"><router-link to="/signup">アカウントを作成します</router-link></p>
+            <div class="item center">
+                <h2>CHUNITHM Toolsとは</h2>
+                <p>CHUNITHM Tools(チュウニズムツール)は、CHUNITHMのスコアを管理、閲覧、分析を行うための非公式ツールです。</p>
+                <p>CHUNITHM-NET利用権がある方は自動で、そうでなくても手動でデータを管理することができます。</p>
+                <p>スコアやレートにかかわるBEST枠等をご確認いただけます。</p>
+                <p>また、多くのユーザー様方のデータを活用し、統計的データをとることもできます。</p>
             </div>
         </div>
     </div>
