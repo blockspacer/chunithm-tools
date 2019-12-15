@@ -18,7 +18,10 @@
             <table>
                 <tr v-for="message in messages" :key="message.time">
                     <td>[{{message.time}}]</td>
-                    <td>{{message.text}}</td>
+                    <td>
+                        <a :href="message.link" v-if="message.link">{{message.text}}</a>
+                        <span v-else>{{message.text}}</span>
+                    </td>
                 </tr>
             </table>
         </div>
@@ -36,7 +39,7 @@
 
     @Component
     export default class extends Vue {
-        messages: {text: string, time: string}[] = [];
+        messages: {text: string, time: string, link?: string}[] = [];
         userid = "";
         password = "";
 
@@ -49,7 +52,9 @@
                 await this.sendHistory();
                 await this.sendScores();
                 await this.sendWorldsEndScores();
-                this.log("データの送信に成功しました。");
+                this.log(
+                    "データの送信に成功しました。更新差分はこちらからご確認頂けます。",
+                    `https://ctdev.raclett3.com/#/difference?token=${this.chunithmToolsToken}`);
             } catch (err) {
                 this.log("データの送信に失敗しました。");
                 throw err;
@@ -266,7 +271,7 @@
                                 });
         }
 
-        private log(message: string) {
+        private log(message: string, link?: string) {
             function format(num: number, digit: number) {
                 return ("0".repeat(digit) + String(num)).slice(-digit);
             }
@@ -277,7 +282,8 @@
             const milliseconds = format(date.getMilliseconds(), 3);
             this.messages.push({
                 text: message,
-                time: `${hours}:${minutes}:${seconds}.${milliseconds}`
+                time: `${hours}:${minutes}:${seconds}.${milliseconds}`,
+                link: link
             });
         }
 
