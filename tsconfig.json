@@ -17,6 +17,8 @@
         "./src"
     ],
     "exclude": [
-        "./test"
+        "./test",
+        "./src/client",
+        "./src/bookmarklet"
     ]
 }
