@@ -112,7 +112,7 @@
             if (emblemBase.length > 0) {
                 const matches = emblemBase[0].innerHTML.match(/_(\d\d)/);
                 if (matches) {
-                    player.emblemBase = parseInt(matches[0]);
+                    player.emblemBase = parseInt(matches[1]);
                 }
             }
 
