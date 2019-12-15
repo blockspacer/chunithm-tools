@@ -17,8 +17,8 @@ export default async function(req: Express.Request, res: Express.Response, next:
 
     try {
         const playerId = await decodeJWT(token);
-        await setScores(playerId, scores);
         await setDifference(playerId, scores);
+        await setScores(playerId, scores);
         res.status(200).json({});
     } catch (err) {
         next(err);
