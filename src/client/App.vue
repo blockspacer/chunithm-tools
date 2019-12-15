@@ -173,4 +173,8 @@
         z-index: 1234;
         overflow-y: scroll;
     }
+
+    img {
+        max-width: 100%;
+    }
 </style>
