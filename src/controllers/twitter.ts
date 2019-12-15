@@ -24,6 +24,10 @@ export async function setPlayerId(token: string, playerId: string): Promise<bool
     }
 
     await knex("twitter")
+            .delete()
+            .where("playerid", playerId);
+
+    await knex("twitter")
             .update({
                 playerid: playerId
             })
