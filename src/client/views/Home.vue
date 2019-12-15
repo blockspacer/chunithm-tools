@@ -5,7 +5,7 @@
             <p v-if="playerName.length > 0">{{playerName}}としてログイン中です。</p>
             <div v-else>
                 <p>プレイヤーデータが登録されていません。以下のブックマークレットを用いてプレイヤーデータを登録してください。</p>
-                <pre>javascript:(function(){s=document.createElement('script');s.src='https://chunithmtools.net/b.js';s.setAttribute('crossorigin','anonymous');document.body.appendChild(s)})();</pre>
+                <pre>javascript:(function(){s=document.createElement('script');s.src='https://{{host}}/b.js';s.setAttribute('crossorigin','anonymous');document.body.appendChild(s)})();</pre>
             </div>
             <p><a href="javascript:void(0)" @click="signout()">ログアウト</a></p>
         </div>
@@ -49,6 +49,7 @@
         playerName = "";
         signedin = false;
         ready = false;
+        host = process.env.HOST;
 
         async getPlayer() {
             const token = window.localStorage.getItem("token");
