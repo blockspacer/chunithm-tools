@@ -7,6 +7,7 @@ import recommend from "./recommend";
 import setHistory from "./set_history";
 import setScores from "./set_scores";
 import setSingleScore from "./set_single_score";
+import totalDifference from "./total_difference";
 import worldsend from "./worldsend";
 
 const router = Express.Router();
@@ -18,6 +19,7 @@ router.post("/get_scores", getScores);
 router.post("/set_history", setHistory);
 router.post("/set_scores", setScores);
 router.post("/set_single_score", setSingleScore);
+router.post("/total_difference", totalDifference);
 router.post("/recommend", recommend);
 router.use("/worldsend", worldsend);
 

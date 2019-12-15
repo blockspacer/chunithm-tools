@@ -27,10 +27,8 @@
     import {Component, Vue} from 'vue-property-decorator';
     import request from "../../lib/request";
     import {Difference} from "../../../models/difference";
-    import {Score} from "../../../models/score";
+    import {TotalDifference} from "../../../models/total_difference";
     import {integerToRateValue} from '../../../helper/formatter';
-
-    type TotalDifference = {oldScore: number, newScore: number};
 
     @Component
     export default class extends Vue {
@@ -43,16 +41,7 @@
 
         async getTotalDifference() {
             const token = window.localStorage.getItem("token");
-            const scores: Score[] = await request("/api/scores/get_scores", {token});
-            this.total = this.scores.reduce<TotalDifference[]>((acc, x) => {
-                    acc[x.song.difficulty].oldScore -= x.newScore - x.oldScore;
-                    return acc;
-                },
-                scores.reduce<number[]>((acc, x) => {
-                    acc[x.song.difficulty] += x.score;
-                    return acc;
-                }, [0, 0, 0, 0])
-                    .map<TotalDifference>((x) =>  ({oldScore: x, newScore: x})));
+            this.total = await request("/api/scores/total_difference", {token});
         }
 
         async getDifference() {
