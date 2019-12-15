@@ -1,6 +1,6 @@
 <template>
     <div v-if="ready" class="item">
-        <h2>スコア履歴</h2>
+        <h2>更新差分</h2>
         <table>
             <tr v-for="(score, key) in total" :key="key" :class="classes[key]">
                 <td class="right">{{score.oldScore}}</td>

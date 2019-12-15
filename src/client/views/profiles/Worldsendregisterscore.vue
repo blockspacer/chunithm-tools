@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="item">
-            <h2>スコア登録</h2>
+            <h2>World's Endスコア登録</h2>
             <p>単一のスコアを手動で登録します。</p>
             <p class="input-name">曲名</p>
             <p><input type="text" v-model="songName"></p>
