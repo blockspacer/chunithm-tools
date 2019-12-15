@@ -31,20 +31,79 @@
                 <li><router-link to="/overpower">オーバーパワー</router-link></li>
                 <li><router-link to="/settings">設定</router-link></li>
             </ul>
+            <h2>その他機能</h2>
+            <ul>
+                <li><a href="javascript:void(0)" @click="toCanvas()">現在の画面を画像に変換/Twitterに投稿</a></li>
+            </ul>
+        </div>
+        <div class="image" v-if="dialog">
+            <div v-if="displayName">
+                <h2>Twitterへ投稿</h2>
+                <p>Twitterユーザー名: {{displayName}}</p>
+                <p class="input-name">テキスト</p>
+                <input type="text" v-model="twitterText">
+                <input type="button" value="投稿" @click="post()">
+            </div>
+            <div v-else>
+                <p>Twitter投稿機能は<router-link to="/settings">Twitter連携</router-link>してからご利用ください。</p>
+            </div>
+            <input type="button" value="閉じる" @click="dialog = false">
+            <img :src="canvasURL">
         </div>
     </div>
 </template>
 
 <script lang="ts">
-    import Vue from "vue";
+    import {Component, Vue} from 'vue-property-decorator';
+    import * as html2canvas from "html2canvas";
+    import request from "./lib/request";
 
-    export default Vue.extend({
-        data() {
-            return {
-                menu: false
-            }
+    @Component
+    export default class extends Vue {
+        menu = false;
+        dialog = false;
+        twitterText = "";
+        displayName = "";
+
+        private canvasURL: string | null = null;
+
+        async post() {
+            const token = window.localStorage.getItem("token");
+
+            await request("/api/twitter/post_image", {
+                                token: token,
+                                image: this.canvasURL,
+                                text: this.twitterText
+                            });
+
+            alert("投稿に成功しました。");
         }
-    });
+
+        async toCanvas() {
+            const token = window.localStorage.getItem("token");
+            if (token === null) {
+                alert("ログインしてからご利用ください。");
+                return;
+            }
+            const verify = await request("/api/users/verify_token", {token});
+            if (verify.status === "FAILED") {
+                alert("ログインしてからご利用ください。");
+                return;
+            }
+            this.displayName = await request("/api/twitter/display_name", {token});
+
+            window.scrollTo(0, 0);
+            const element = document.getElementById("main");
+            if (!element) {
+                return;
+            }
+            const canvas = await html2canvas(element, {});
+            this.canvasURL = canvas.toDataURL("image/png");
+
+            this.dialog = true;
+            this.twitterText = "#CHUNITHM_Tools";
+        }
+    };
 </script>
 
 <style scoped>
@@ -102,5 +161,16 @@
         top: 10px;
         width: 50px;
         height: 50px;
+    }
+
+    .image {
+        background-color: #FFF;
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1234;
+        overflow-y: scroll;
     }
 </style>
