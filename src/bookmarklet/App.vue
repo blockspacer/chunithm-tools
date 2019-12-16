@@ -44,6 +44,7 @@
         userid = "";
         password = "";
 
+        private host = process.env.HOST;
         private chunithmNetToken: string;
         private chunithmToolsToken: string;
 
@@ -55,7 +56,7 @@
                 await this.sendWorldsEndScores();
                 this.log(
                     "データの送信に成功しました。更新差分はこちらからご確認頂けます。",
-                    `https://chunithmtools.net/#/difference?token=${this.chunithmToolsToken}`);
+                    `https://${this.host}/#/difference?token=${this.chunithmToolsToken}`);
             } catch (err) {
                 this.log("データの送信に失敗しました。");
                 throw err;
@@ -63,7 +64,7 @@
         }
 
         async signin() {
-            const token = await this.request("https://chunithmtools.net/api/users/signin", {
+            const token = await this.request(`https://${this.host}/api/users/signin`, {
                                         userId: this.userid,
                                         password: this.password
                                     }) || null;
@@ -124,7 +125,7 @@
                 }
             }
 
-            await this.request("https://chunithmtools.net/api/players/set_player", {
+            await this.request(`https://${this.host}/api/players/set_player`, {
                                     token: this.chunithmToolsToken,
                                     player: player
                                 });
@@ -151,7 +152,7 @@
                 });
             }
 
-            await this.request("https://chunithmtools.net/api/scores/set_history", {
+            await this.request(`https://${this.host}/api/scores/set_history`, {
                                     token: this.chunithmToolsToken,
                                     history: history
                                 });
@@ -212,7 +213,7 @@
                 }
             }
 
-            await this.request("https://chunithmtools.net/api/scores/set_scores", {
+            await this.request(`https://${this.host}/api/scores/set_scores`, {
                                     token: this.chunithmToolsToken,
                                     scores: scores
                                 });
@@ -266,7 +267,7 @@
                 }
             }
 
-            await this.request("https://chunithmtools.net/api/scores/worldsend/set_scores", {
+            await this.request(`https://${this.host}/api/scores/worldsend/set_scores`, {
                                     token: this.chunithmToolsToken,
                                     scores: scores
                                 });
@@ -340,7 +341,7 @@
             if (token === null) {
                 return;
             }
-            const verify = await this.request("https://chunithmtools.net/api/users/verify_token", {token});
+            const verify = await this.request(`https://${this.host}/api/users/verify_token`, {token});
             if (verify.status === "FAILED") {
                 return;
             }

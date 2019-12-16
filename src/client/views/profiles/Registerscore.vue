@@ -46,6 +46,7 @@
         songs: Song[] = [];
         difficulty = Difficulty.MASTER;
         dialog = false;
+        host = process.env.HOST;
 
         Difficulty = Difficulty;
 

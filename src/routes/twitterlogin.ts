@@ -14,7 +14,7 @@ export default function() {
     Passport.use("link", new Twitter.Strategy({
         consumerKey: config.twitter.consumerKey,
         consumerSecret: config.twitter.consumerSecret,
-        callbackURL: "https://chunithmtools.net/auth/callback/link"
+        callbackURL: `https://${process.env.HOST}/auth/callback/link`
     }, (token, secret, profile, callback) => {
         process.nextTick(() => {
             return callback(null, {
@@ -28,7 +28,7 @@ export default function() {
     Passport.use("signin", new Twitter.Strategy({
         consumerKey: config.twitter.consumerKey,
         consumerSecret: config.twitter.consumerSecret,
-        callbackURL: "https://chunithmtools.net/auth/callback/signin"
+        callbackURL: `https://${process.env.HOST}/auth/callback/signin`
     }, (token, secret, profile, callback) => {
         process.nextTick(() => {
             return callback(null, {
@@ -49,12 +49,12 @@ export default function() {
                 next(err);
             }
             if (user === false) {
-                res.redirect(302, "https://chunithmtools.net/#/settings");
+                res.redirect(302, `https://${process.env.HOST}/#/settings`);
                 return;
             }
             const token = sha256(user.profile.id + config.twitter.consumerKey);
             await register(token, user.accessToken, user.secret, user.profile.id, "");
-            res.redirect(302, "https://chunithmtools.net/#/settings?twitter=" + token);
+            res.redirect(302, `https://${process.env.HOST}/#/settings?twitter=${token}`);
         })(req, res, next);
     });
 
@@ -64,17 +64,17 @@ export default function() {
                 next(err);
             }
             if (!user) {
-                res.redirect(302, "https://chunithmtools.net/");
+                res.redirect(302, `https://${process.env.HOST}/`);
                 return;
             }
             const token = sha256(user.profile.id + config.twitter.consumerKey);
             const playerId = await signInByTwitterToken(token);
             if (playerId) {
                 const token = await signInByPlayerId(playerId);
-                res.redirect(302, "https://chunithmtools.net/#/?token=" + token);
+                res.redirect(302, `https://${process.env.HOST}/#/?token=${token}`);
                 return;
             }
-            res.redirect(302, "https://chunithmtools.net/");
+            res.redirect(302, `https://${process.env.HOST}/`);
         })(req, res, next);
     });
 

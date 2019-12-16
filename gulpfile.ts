@@ -12,12 +12,18 @@ gulp.task("build-server", () => {
 });
 
 gulp.task("build-client", () => {
+    process.env.HOST = process.env.NODE_ENV === "production"
+                                    ? "chunithmtools.net"
+                                    : "ctenv.raclett3.com";
     return gulp.src("./src/client/index.ts")
             .pipe(WebpackStream(config))
             .pipe(gulp.dest("./build/client"));
 });
 
 gulp.task("build-bookmarklet", () => {
+    process.env.HOST = process.env.NODE_ENV === "production"
+                                    ? "chunithmtools.net"
+                                    : "ctenv.raclett3.com";
     return gulp.src("./src/bookmarklet/index.ts")
             .pipe(WebpackStream(bookmarkletConfig))
             .pipe(gulp.dest("./build/bookmarklet"));

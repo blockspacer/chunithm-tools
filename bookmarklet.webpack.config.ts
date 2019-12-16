@@ -26,6 +26,7 @@ const config: Webpack.Configuration = {
         ]
     },
     plugins: [
+        new Webpack.EnvironmentPlugin(["HOST"]),
         new VueLoaderPlugin()
     ],
     resolve: {

@@ -27,7 +27,7 @@ export default async function(req: Express.Request, res: Express.Response): Prom
         form: {
             grant_type: "authorization_code",
             code,
-            redirect_uri: "https://chunithmtools.net/linelogin",
+            redirect_uri: `https://${process.env.HOST}/linelogin`,
             client_id: config.lineLogin.clientId,
             client_secret: config.lineLogin.clientSecret
         }
@@ -40,7 +40,7 @@ export default async function(req: Express.Request, res: Express.Response): Prom
                 algorithms: ["HS256"]
             }) as {[key: string]: string};
             const token = await signInByPlayerId(hexHmac(decoded.sub));
-            res.redirect(302, `https://chunithmtools.net/#/?token=${token}`);
+            res.redirect(302, `https://${process.env.HOST}/#/?token=${token}`);
         } catch (err) {
             res.status(200).send("");
         }
