@@ -19,7 +19,7 @@
         </div>
         <div class="item center">
             <p>または、以下のブックマークレットをCHUNITHM Toolsで実行してスコアを登録してください。</p>
-            <pre>javascript:(function(){s=document.createElement('script');s.src='https://{{host}}/b.js';s.setAttribute('crossorigin','anonymous');document.body.appendChild(s)})();</pre>
+            <pre>javascript:(function(){s=document.createElement('script');s.src='https://chunithmtools.net/b.js';s.setAttribute('crossorigin','anonymous');document.body.appendChild(s)})();</pre>
         </div>
         <div class="overlay" v-if="dialog" @click="dialog=false">
             <div class="dialog">

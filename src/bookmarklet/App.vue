@@ -14,6 +14,7 @@
                 <p class="input-name">パスワード</p>
                 <p><input type="password" v-model="password"></p>
                 <p><input type="button" value="サインイン" @click="signin()"></p>
+                <p>LINE版をご利用の方へ: ユーザーIDとパスワードは「register ユーザー名, パスワード」というコマンドでご登録いただけます。</p>
             </div>
             <table>
                 <tr v-for="message in messages" :key="message.time">
@@ -113,7 +114,7 @@
             if (emblemBase.length > 0) {
                 const matches = emblemBase[0].innerHTML.match(/_(\d\d)/);
                 if (matches) {
-                    player.emblemBase = parseInt(matches[0]);
+                    player.emblemBase = parseInt(matches[1]);
                 }
             }
 
