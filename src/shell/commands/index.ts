@@ -30,6 +30,7 @@ export const commands: {[key: string]: Command} = {
     "info": info,
 
     "mybest": mybest,
+    "sc": mybest,
 
     "profile": profile,
 
