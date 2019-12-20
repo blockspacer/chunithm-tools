@@ -108,7 +108,7 @@
 
             player.playerName = (frame.getElementsByClassName("ml_10")[0] as HTMLElement).innerText;
             player.currentRate = Number((rates.match(/: (\d*)\.(\d*)/) || [0, 0, 0]).slice(1,3).join(""));
-            player.maxRate = Number((rates.match(/: (\d*)\.(\d*)/) || [0, 0, 0]).slice(1,3).join(""));
+            player.maxRate = Number((rates.match(/X (\d*)\.(\d*)/) || [0, 0, 0]).slice(1,3).join(""));
             player.title = (frame.getElementsByClassName("player_honor_text")[0] as HTMLElement).innerText;
 
             if (emblemBase.length > 0) {
