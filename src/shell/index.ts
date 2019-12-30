@@ -13,7 +13,7 @@ const errorMessages = [
 export async function executeCommand(command: string, context: Context): Promise<string[]> {
     const spaceSeparated = command.split(" ");
     const merged = [spaceSeparated[0], spaceSeparated.slice(1).join(" ")];
-    const commandName = merged[0];
+    const commandName = merged[0].toLowerCase();
     const parameters = merged[1] !== ""
                        ? merged[1].split(",").map((x) => x.trim())
                        : [];

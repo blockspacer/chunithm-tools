@@ -21,7 +21,7 @@ export const help: Command = {
                 "difficulty - 曲の難易度を取得します。",
                 "help - コマンドのヘルプを表示します。",
                 "info - 曲の情報を取得します。",
-                "mybest - 曲の情報を取得します。",
+                "mybest - 自己ベストスコアを取得します。",
                 "ping - CHUNITHM Toolsの動作確認を行います。",
                 "profile - プレイヤーのプロフィールを表示します。",
                 "rank - グループ内のスコアランキングを表示します。",

@@ -169,7 +169,7 @@
             this.title = player.title;
             this.bestAverage = (bestAverage / 100).toFixed(4);
             this.recentAverage = ((player.currentRate * 4 - bestAverage * 3) / 100).toFixed(4);
-            this.reachableRate = integerToRate(Math.floor((bestAverage * 3 + this.best[0].rate) / 4));
+            this.reachableRate = ((bestAverage * 3 + this.best[0].rate) / 4 / 100).toFixed(4);
         }
 
         async init() {
