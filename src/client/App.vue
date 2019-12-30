@@ -177,4 +177,19 @@
     img {
         max-width: 100%;
     }
+
+    @media screen and (min-width: 1024px) {
+        #menu {
+            right: calc(100% - 320px);
+        }
+    
+        #main {
+            left: 320px;
+            width: calc(100% - 320px);
+        }
+
+        .menuicon {
+            left: -50px;
+        }
+    }
 </style>
