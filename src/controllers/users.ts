@@ -85,3 +85,13 @@ export async function getPlayerId(userId: string) {
 
     return rows[0].playerid as string;
 }
+
+export async function getUserId(playerId: string) {
+    const rows = await knex("users")
+                        .select("userid")
+                        .where({
+                            playerid: playerId
+                        });
+
+    return rows[0].userid as string || null;
+}

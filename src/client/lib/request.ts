@@ -9,8 +9,10 @@ export default async function request(url: string, data: any) {
         } catch {
             return response.data;
         }
-    } catch {
-        alert("結構大変なエラーが起きてます。Twitter(@chunithmtools)に連絡してくれると助かります。");
+    } catch (err) {
+        const message = "結構大変なエラーが起きてます。Twitter(@chunithmtools)に連絡してくれると助かります。";
+        const reason = err?.response?.status || "Unknown";
+        alert(`${message}\n${reason}`);
         throw new Error();
     }
 }

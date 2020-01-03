@@ -1,4 +1,4 @@
-import {createUser} from "../../controllers/users";
+import {createUser, getUserId} from "../../controllers/users";
 import {Command, CommandErrorKinds} from "../models";
 
 export const register: Command = {
@@ -6,9 +6,21 @@ export const register: Command = {
     help: [
         "register ユーザーID, パスワード",
         "CHUNITHM Tools Web版及びブックマークレットを使用するためのユーザーIDとパスワードを登録します。",
-        "ユーザーIDは英数字、パスワードはASCII文字のみで構成されている必要があります。"
+        "ユーザーIDは英数字、パスワードはASCII文字のみで構成されている必要があります。",
+        "パラメーターを設定しなかった場合、現在設定されているユーザーIDを表示します。"
     ],
     body: async (params, context) => {
+        if (!context.playerId) {
+            return {
+                error: CommandErrorKinds.PLAYER_INFO_IS_MISSING
+            };
+        }
+
+        if (params.length === 0) {
+            const userId = await getUserId(context.playerId);
+            return [userId ? `あなたのユーザーID: ${userId}` : "ユーザーIDは登録されていません。"];
+        }
+
         if (params.length < 2) {
             return {
                 error: CommandErrorKinds.TOO_FEW_PARAMETERS
@@ -18,12 +30,6 @@ export const register: Command = {
         if (params.length > 2) {
             return {
                 error: CommandErrorKinds.TOO_MANY_PARAMETERS
-            };
-        }
-
-        if (!context.playerId) {
-            return {
-                error: CommandErrorKinds.PLAYER_INFO_IS_MISSING
             };
         }
 

@@ -3,7 +3,12 @@ import * as Express from "express";
 const timestamps: {[key: string]: number[]} = {};
 
 export function rateLimit(req: Express.Request, res: Express.Response, next: Express.NextFunction) {
-    const ip = req.ip;
+    const ip = req.headers["x-forwarded-for"];
+    if (typeof ip !== "string") {
+        next();
+        return;
+    }
+
     const now = Math.floor(Date.now() / 1000);
     if (!(ip in timestamps)) {
         timestamps[ip] = [];
