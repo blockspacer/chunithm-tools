@@ -1,5 +1,6 @@
 import {Command} from "../models";
 import {border} from "./border";
+import {detail} from "./detail";
 import {difficulty} from "./difficulty";
 import {help} from "./help";
 import {info} from "./info";
@@ -23,6 +24,8 @@ export const commands: {[key: string]: Command} = {
     "bd": border,
     "b": border,
     "ボーダー": border,
+
+    "detail": detail,
 
     "difficulty": difficulty,
     "dif": difficulty,

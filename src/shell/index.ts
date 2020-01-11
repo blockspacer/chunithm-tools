@@ -20,6 +20,13 @@ export async function executeCommand(command: string, context: Context): Promise
 
     if (!(commandName in commands)) {
         if (!context.groupId) {
+            if (parameters.length === 0) {
+                const result = await commands.detail.body([commandName], context);
+                if ("error" in result) {
+                    return ["Error: ", errorMessages[result.error] || "不明なエラーです。"];
+                }
+                return result;
+            }
             return ["Error: ", errorMessages[CommandErrorKinds.COMMAND_NOT_FOUND]];
         }
         return [];
