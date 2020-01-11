@@ -123,8 +123,8 @@ async function songs() {
                         difficulty: 3,
                         ratevalue: row["MASTERDIFFICULTY"],
                         notes: row["NOTESCOUNT"],
-                        scorevideourl: row["SCOREVIDEO"],
-                        scoreimageurl: row["SCOREIMAGE"],
+                        scorevideourl: row["SCOREVIDEOURL"],
+                        scoreimageurl: row["SCOREIMAGEURL"],
                         genreid: row["GENREID"]
                     }]);
     }
