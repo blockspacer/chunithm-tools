@@ -2,7 +2,7 @@ import {loadConfig} from "./config";
 import {listen} from "./routes";
 
 (async () => {
-    console.log("CHUNITHM Tools 4.0.2");
+    console.log("CHUNITHM Tools 4.0.3");
 
     if (process.env.HOST) {
         process.env.HOST = process.env.NODE_ENV === "production"
